@@ -2482,14 +2482,13 @@ onKeyStroke('ArrowDown', onDown)
             :disabled="isPaginationLoading"
             class="!rounded-r-none !border-r-0 nc-grid-add-new-row"
             size="small"
+            v-if="!isMobileMode"
             type="secondary"
             @click.stop="isAddNewRecordGridMode ? addEmptyRow() : onNewRecordToFormClick()"
           >
             <div data-testid="nc-pagination-add-record" class="flex items-center gap-2">
               <GeneralIcon icon="plus" />
-              <template v-if="isAddNewRecordGridMode">
-                {{ $t('activity.newRecord') }}
-              </template>
+              <template v-if="isAddNewRecordGridMode">{{ $t('activity.newRecord') }}</template>
               <template v-else> {{ $t('activity.newRecord') }} - {{ $t('objects.viewType.form') }} </template>
             </div>
           </NcButton>

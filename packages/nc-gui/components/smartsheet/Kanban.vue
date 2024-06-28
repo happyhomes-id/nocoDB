@@ -878,7 +878,7 @@ const handleSubmitRenameOrNewStack = async (loadMeta: boolean, stack?: any, stac
                                   {{ $t('title.looksLikeThisStackIsEmpty') }}
                                 </span>
                               </div>
-                              <!-- <NcButton
+                              <NcButton
                                 v-if="isUIAllowed('dataInsert')"
                                 size="xs"
                                 type="secondary"
@@ -894,7 +894,7 @@ const handleSubmitRenameOrNewStack = async (loadMeta: boolean, stack?: any, stac
 
                                   {{ $t('activity.newRecord') }}
                                 </div>
-                              </NcButton> -->
+                              </NcButton>
                             </div>
                           </template>
                         </Draggable>
