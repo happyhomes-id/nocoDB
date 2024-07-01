@@ -14,9 +14,12 @@ const props = withDefaults(
   },
 )
 
+
 const emits = defineEmits(['rename', 'closeModal', 'delete'])
 
-const { isUIAllowed, isDataReadOnly } = useRoles()
+const { isUIAllowed, isDataReadOnly , nowRoles} = useRoles()
+
+const nowRR = nowRoles('roles')
 
 const isPublicView = inject(IsPublicInj, ref(false))
 
@@ -232,7 +235,7 @@ const onDelete = async () => {
           </template>
         </NcSubMenu>
       </template>
-      <NcSubMenu key="download">
+      <NcSubMenu v-if="nowRR" key="download">
         <template #title>
           <div
             v-e="[

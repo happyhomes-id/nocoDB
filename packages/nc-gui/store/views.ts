@@ -270,7 +270,7 @@ export const useViewsStore = defineStore('viewsStore', () => {
             viewTitle: view.id || '',
             viewId: tableId,
             baseId: baseIdOrBaseId,
-            slugs,
+            slugs, 
           },
           query: router.currentRoute.value.query,
         })
