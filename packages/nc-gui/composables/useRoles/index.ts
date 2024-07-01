@@ -61,6 +61,7 @@ export const useRolesShared = createSharedComposable(() => {
     }
 
     baseRoles = extractRolesObj(baseRoles)
+    
 
     return baseRoles
   })
@@ -128,6 +129,33 @@ export const useRolesShared = createSharedComposable(() => {
     }
   }
 
+  const nowRoles = (
+    permission: Permission | string,
+    args: {
+      roles?: string | Record<string, boolean> | string[] | null
+      source?: MaybeRef<SourceType & { meta?: Record<string, any> }>
+      skipSourceCheck?: boolean
+    } = {},
+  ) => {
+    const { roles } = args
+
+    let checkRoles: Record<string, boolean> = {}
+
+    if (!roles) {
+      if (allRoles.value) checkRoles = allRoles.value
+      
+      if (allRoles.value?.owner || allRoles.value?.super) {
+        // console.log('bisa download')
+        return true
+      }else{
+        // console.log('tidak bisa download')
+        return false
+      }
+    } else {
+      checkRoles = extractRolesObj(roles)      
+      // console.log('cek roles', checkRoles)
+    }
+  }
   const isUIAllowed = (
     permission: Permission | string,
     args: {
@@ -142,8 +170,13 @@ export const useRolesShared = createSharedComposable(() => {
 
     if (!roles) {
       if (allRoles.value) checkRoles = allRoles.value
+      // if (allRoles.value?.super && allRoles.value.editor) {
+      //   console.log('bisa download')
+      // }else{
+      //   console.log('lu ga bisa download')
+      // }
     } else {
-      checkRoles = extractRolesObj(roles)
+      checkRoles = extractRolesObj(roles)      
     }
 
     // check source level restrictions
@@ -172,7 +205,7 @@ export const useRolesShared = createSharedComposable(() => {
     )
   }
 
-  return { allRoles, orgRoles, workspaceRoles, baseRoles, loadRoles, isUIAllowed }
+  return { allRoles, orgRoles, workspaceRoles, baseRoles, loadRoles, isUIAllowed, nowRoles }
 })
 
 type IsUIAllowedParams = Parameters<ReturnType<typeof useRolesShared>['isUIAllowed']>

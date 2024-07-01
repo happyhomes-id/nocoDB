@@ -8,6 +8,11 @@ const isPublic = inject(IsPublicInj, ref(false))
 
 const { isViewsLoading } = storeToRefs(useViewsStore())
 
+const {nowRoles, isUIAllowed} =useRoles()
+
+const nowRR = nowRoles('roles')
+
+
 const { isMobileMode } = storeToRefs(useConfigStore())
 
 const { appInfo } = useGlobal()
@@ -27,8 +32,10 @@ const isSharedBase = computed(() => route.value.params.typeOrId === 'base')
     </template>
     <template v-else>
       <GeneralOpenLeftSidebarBtn />
-      <LazySmartsheetToolbarViewInfo v-if="!isPublic" />
 
+
+      <!-- TOP BAR SUPER OWNER -->
+      <LazySmartsheetToolbarViewInfo v-if="!isPublic && nowRR" />
       <div v-if="!isSharedBase && !isMobileMode">
         <SmartsheetTopbarSelectMode />
       </div>

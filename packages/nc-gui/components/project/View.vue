@@ -156,7 +156,7 @@ watch(
               </div>
             </div>
           </template>
-          <ProjectAccessSettings :base-id="currentBase?.id" />
+        <ProjectAccessSettings :base-id="currentBase?.id" />
         </a-tab-pane>
         <!--        <a-tab-pane v-if="isUIAllowed('sourceCreate')" key="data-source">
           <template #tab>
