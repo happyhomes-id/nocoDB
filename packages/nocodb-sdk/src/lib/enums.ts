@@ -304,7 +304,7 @@ export const OrderedProjectRoles = [
   ProjectRoles.CREATOR,
   ProjectRoles.EDITOR,
   ProjectRoles.COMMENTER,
-  ProjectRoles.LIMITED  ,
+  ProjectRoles.LIMITED,
   ProjectRoles.VIEWER,
   ProjectRoles.NO_ACCESS,
 ];
