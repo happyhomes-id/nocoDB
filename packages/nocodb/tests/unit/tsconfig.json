@@ -11,10 +11,9 @@
     "declaration": true,
     "inlineSourceMap": true,
     "esModuleInterop": true
-    /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */,
+    /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */ ,
     "allowJs": false,
     // "strict": true /* Enable all strict type-checking options. */,
-
     /* Strict Type-Checking Options */
     //     "noImplicitAny": true /* Raise error on expressions and declarations with an implied 'any' type. */,
     //     "strictNullChecks": true /* Enable strict null checks. */,
@@ -25,26 +24,25 @@
     "resolveJsonModule": true,
     /* Additional Checks */
     "noUnusedLocals": false
-    /* Report errors on unused locals. */,
+    /* Report errors on unused locals. */ ,
     "noUnusedParameters": false
-    /* Report errors on unused parameters. */,
+    /* Report errors on unused parameters. */ ,
     "noImplicitReturns": false
-    /* Report error when not all code paths in function return a value. */,
+    /* Report error when not all code paths in function return a value. */ ,
     "noFallthroughCasesInSwitch": false
-    /* Report errors for fallthrough cases in switch statement. */,
+    /* Report errors for fallthrough cases in switch statement. */ ,
     /* Debugging Options */
     "traceResolution": false
-    /* Report module resolution log messages. */,
+    /* Report module resolution log messages. */ ,
     "listEmittedFiles": false
-    /* Print names of generated files part of the compilation. */,
+    /* Print names of generated files part of the compilation. */ ,
     "listFiles": false
-    /* Print names of files part of the compilation. */,
+    /* Print names of files part of the compilation. */ ,
     "pretty": true
-    /* Stylize errors and messages using color and context. */,
+    /* Stylize errors and messages using color and context. */ ,
     /* Experimental Options */
     // "experimentalDecorators": true /* Enables experimental support for ES7 decorators. */,
     // "emitDecoratorMetadata": true /* Enables experimental support for emitting type metadata for decorators. */,
-
     "lib": [
       "es2017",
       "dom"
@@ -64,7 +62,6 @@
     // "**/*.ts",
     // "**/*.json"
   ],
-  "exclude": [
-  ],
+  "exclude": [],
   "compileOnSave": false
 }
