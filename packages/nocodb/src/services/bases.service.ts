@@ -35,7 +35,7 @@ export class BasesService {
     protected readonly appHooksService: AppHooksService,
     protected metaService: MetaService,
     protected tablesService: TablesService,
-  ) {}
+  ) { }
 
   async baseList(
     context: NcContext,

@@ -182,7 +182,7 @@ const toggleSelectAll = (role: Role) => {
           "
         >
           <template #headerCell="{ column }">
-            <template v-if="['editor', 'commenter', 'viewer','limited'].includes(column.name)">
+            <template v-if="['editor', 'commenter', 'viewer', 'limited'].includes(column.name)">
               <div class="flex flex-row gap-x-1">
                 <NcCheckbox :checked="selectAll[column.name as Role]" @change="() => toggleSelectAll(column.name)" />
                 <div class="flex capitalize">

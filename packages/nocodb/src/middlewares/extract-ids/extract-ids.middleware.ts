@@ -45,7 +45,7 @@ export const rolesLabel = {
   [ProjectRoles.VIEWER]: 'Base Viewer',
   [ProjectRoles.EDITOR]: 'Base Editor',
   [ProjectRoles.COMMENTER]: 'Base Commenter',
-  [ProjectRoles.LIMITED]: 'Base Limited',
+  [ProjectRoles.LIMITED]: 'Base Commenter',
   [ProjectRoles.NO_ACCESS]: 'No Access',
 };
 

@@ -35,7 +35,9 @@ onBeforeMount(async () => {
   try {
     await loadProject()
   } catch (e: any) {
+    
     if (e.response?.status === 403) {
+      // console.log(e.response);  
       // Base is not accessible
       message.error(t('msg.error.projectNotAccessible'))
       router.replace('/')

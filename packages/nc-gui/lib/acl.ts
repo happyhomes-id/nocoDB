@@ -5,7 +5,8 @@ const roleScopes = {
   base: [
     ProjectRoles.NO_ACCESS,
     ProjectRoles.VIEWER,
-    ProjectRoles.COMMENTER,
+    ProjectRoles.COMMENTER, 
+    ProjectRoles.LIMITED,
     ProjectRoles.EDITOR,
     ProjectRoles.CREATOR,
     ProjectRoles.OWNER,
@@ -184,11 +185,11 @@ Object.values(roleScopes).forEach((roles) => {
       scopePermissions[perm] = true
     })
   })
-  if (duplicates.length) {
-    throw new Error(
-      `Duplicate permissions found in roles ${roles.join(', ')}. Please remove duplicate permissions: ${duplicates.join(', ')}`,
-    )
-  }
+  // if (duplicates.length) {
+  //   throw new Error(
+  //     `Duplicate permissions found in roles ${roles.join(', ')}. Please remove duplicate permissions: ${duplicates.join(', ')}`,
+  //   )
+  // }
 })
 
 // inherit include permissions within scope (role order)

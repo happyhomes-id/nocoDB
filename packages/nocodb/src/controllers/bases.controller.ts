@@ -28,7 +28,7 @@ import { NcContext, NcRequest } from '~/interface/config';
 @UseGuards(MetaApiLimiterGuard, GlobalGuard)
 @Controller()
 export class BasesController {
-  constructor(protected readonly projectsService: BasesService) {}
+  constructor(protected readonly projectsService: BasesService) { }
 
   @Acl('baseList', {
     scope: 'org',
