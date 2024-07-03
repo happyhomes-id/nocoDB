@@ -9,7 +9,7 @@ import { Base, Model, ModelRoleVisibility, View } from '~/models';
 
 @Injectable()
 export class ModelVisibilitiesService {
-  constructor(private readonly appHooksService: AppHooksService) {}
+  constructor(private readonly appHooksService: AppHooksService) { }
 
   async xcVisibilityMetaSetAll(
     context: NcContext,
@@ -86,6 +86,7 @@ export class ModelVisibilitiesService {
       'viewer',
       'editor',
       'commenter',
+      'limited',
       'guest',
     ];
 

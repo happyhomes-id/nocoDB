@@ -57,6 +57,11 @@ const rolesTypes = [
     value: 'commenter',
   },
   {
+    id: 'Limited',
+    name: 'Limited',
+    value: 'limited',
+  },
+  {
     id: 'Viewer',
     name: 'Viewer',
     value: 'viewer',

@@ -6,10 +6,12 @@ import { ProjectsPage } from '../../../pages/ProjectsPage';
 import { getDefaultPwd } from '../../../tests/utils/general';
 import { isEE } from '../../../setup/db';
 
+// Limited
 const roleDb = [
   { email: 'creator@nocodb.com', role: 'creator', url: '' },
   { email: 'editor@nocodb.com', role: 'editor', url: '' },
   { email: 'commenter@nocodb.com', role: 'commenter', url: '' },
+  { email: 'limited@nocodb.com', role: 'limited', url: '' },
   { email: 'viewer@nocodb.com', role: 'viewer', url: '' },
 ];
 

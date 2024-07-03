@@ -23,7 +23,7 @@ async function xcVisibilityMetaGet(
   const { includeM2M = true, baseId, models: _models } = param ?? {};
 
   // todo: move to
-  const roles = ['owner', 'creator', 'viewer', 'editor', 'commenter', 'guest'];
+  const roles = ['owner', 'creator', 'viewer', 'editor', 'commenter', 'limited', 'guest'];
 
   const defaultDisabled = roles.reduce((o, r) => ({ ...o, [r]: false }), {});
 
@@ -68,7 +68,7 @@ async function xcVisibilityMetaGet(
 
 @Injectable()
 export class ViewsService {
-  constructor(private appHooksService: AppHooksService) {}
+  constructor(private appHooksService: AppHooksService) { }
 
   async viewList(
     context: NcContext,

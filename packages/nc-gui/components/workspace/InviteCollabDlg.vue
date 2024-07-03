@@ -232,6 +232,16 @@ const emailInput = ref((el) => {
                           {{ $t('msg.info.roles.workspaceLevelCommenter') }}
                         </span>
                       </a-select-option>
+                      <a-select-option
+                        class="nc-role-option"
+                        :value="WorkspaceUserRoles.LIMITED"
+                        :label="$t(`objects.roleType.workspaceLevelLimited`)"
+                      >
+                        <div>{{ $t(`objects.roleType.workspaceLevelLimited`) }}</div>
+                        <span class="text-gray-500 text-xs whitespace-normal">
+                          {{ $t('msg.info.roles.workspaceLevelLimited') }}
+                        </span>
+                      </a-select-option>
 
                       <a-select-option
                         class="nc-role-option"

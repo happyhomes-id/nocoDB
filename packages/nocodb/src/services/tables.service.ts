@@ -44,7 +44,7 @@ export class TablesService {
     protected readonly metaDiffService: MetaDiffsService,
     protected readonly appHooksService: AppHooksService,
     protected readonly columnsService: ColumnsService,
-  ) {}
+  ) { }
 
   async tableUpdate(
     context: NcContext,
@@ -212,9 +212,9 @@ export class TablesService {
               return (
                 isLinksOrLTAR(c) &&
                 (c.colOptions as LinkToAnotherRecordColumn).type ===
-                  RelationTypes.MANY_TO_MANY &&
+                RelationTypes.MANY_TO_MANY &&
                 (c.colOptions as LinkToAnotherRecordColumn).fk_mm_model_id ===
-                  table.id
+                table.id
               );
             });
           });
@@ -353,6 +353,7 @@ export class TablesService {
       'viewer',
       'editor',
       'commenter',
+      'limited',
       'guest',
     ];
 

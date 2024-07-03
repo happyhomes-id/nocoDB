@@ -45,6 +45,7 @@ export const rolesLabel = {
   [ProjectRoles.VIEWER]: 'Base Viewer',
   [ProjectRoles.EDITOR]: 'Base Editor',
   [ProjectRoles.COMMENTER]: 'Base Commenter',
+  [ProjectRoles.LIMITED]: 'Base Limited',
   [ProjectRoles.NO_ACCESS]: 'No Access',
 };
 
@@ -133,19 +134,19 @@ export class ExtractIdsMiddleware implements NestMiddleware, CanActivate {
       const view = await View.get(
         context,
         params.formViewId ||
-          params.gridViewId ||
-          params.kanbanViewId ||
-          params.galleryViewId ||
-          params.calendarViewId,
+        params.gridViewId ||
+        params.kanbanViewId ||
+        params.galleryViewId ||
+        params.calendarViewId,
       );
 
       if (!view) {
         NcError.viewNotFound(
           params.formViewId ||
-            params.gridViewId ||
-            params.kanbanViewId ||
-            params.galleryViewId ||
-            params.calendarViewId,
+          params.gridViewId ||
+          params.kanbanViewId ||
+          params.galleryViewId ||
+          params.calendarViewId,
         );
       }
 
@@ -366,7 +367,7 @@ export class ExtractIdsMiddleware implements NestMiddleware, CanActivate {
     await this.use(
       context.switchToHttp().getRequest(),
       context.switchToHttp().getResponse(),
-      () => {},
+      () => { },
     );
     return true;
   }
@@ -382,7 +383,7 @@ function getUserRoleForScope(user: any, scope: string) {
 
 @Injectable()
 export class AclMiddleware implements NestInterceptor {
-  constructor(private reflector: Reflector) {}
+  constructor(private reflector: Reflector) { }
 
   async intercept(
     context: ExecutionContext,
@@ -437,6 +438,7 @@ export class AclMiddleware implements NestInterceptor {
         roles?.editor ||
         roles?.viewer ||
         roles?.commenter ||
+        roles?.limited ||
         roles?.[OrgUserRoles.SUPER_ADMIN] ||
         roles?.[OrgUserRoles.CREATOR] ||
         roles?.[OrgUserRoles.VIEWER]
@@ -531,14 +533,14 @@ export const Acl =
       blockApiTokenAccess?: boolean;
     } = {},
   ) =>
-  (target: any, key?: string, descriptor?: PropertyDescriptor) => {
-    SetMetadata('permission', permissionName)(target, key, descriptor);
-    SetMetadata('scope', scope)(target, key, descriptor);
-    SetMetadata('allowedRoles', allowedRoles)(target, key, descriptor);
-    SetMetadata('blockApiTokenAccess', blockApiTokenAccess)(
-      target,
-      key,
-      descriptor,
-    );
-    UseInterceptors(AclMiddleware)(target, key, descriptor);
-  };
+    (target: any, key?: string, descriptor?: PropertyDescriptor) => {
+      SetMetadata('permission', permissionName)(target, key, descriptor);
+      SetMetadata('scope', scope)(target, key, descriptor);
+      SetMetadata('allowedRoles', allowedRoles)(target, key, descriptor);
+      SetMetadata('blockApiTokenAccess', blockApiTokenAccess)(
+        target,
+        key,
+        descriptor,
+      );
+      UseInterceptors(AclMiddleware)(target, key, descriptor);
+    };

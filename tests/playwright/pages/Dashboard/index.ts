@@ -220,6 +220,7 @@ export class DashboardPage extends BasePage {
       ],
       editor: ['Copy Base Info', 'Swagger: REST APIs', 'Copy Auth Token', 'Language', 'Account'],
       commenter: ['Copy Base Info', 'Copy Auth Token', 'Language', 'Account'],
+      limited: ['Copy Base Info', 'Copy Auth Token', 'Language', 'Account'],
       viewer: ['Copy Base Info', 'Copy Auth Token', 'Language', 'Account'],
     };
 
@@ -227,6 +228,7 @@ export class DashboardPage extends BasePage {
       menuItems = {
         creator: [],
         commenter: [],
+        limited: [],
         editor: ['Language'],
         viewer: ['Language'],
       };
@@ -277,6 +279,7 @@ export class DashboardPage extends BasePage {
       creator: ['Collaborators', 'Settings', 'Copy Auth Token', 'Themes', 'Preview as', 'Language', 'Account'],
       editor: ['Collaborators', 'Settings', 'Copy Auth Token', 'Language', 'Account'],
       commenter: ['Collaborators', 'Settings', 'Copy Auth Token', 'Language', 'Account'],
+      limited: ['Collaborators', 'Settings', 'Copy Auth Token', 'Language', 'Account'],
       viewer: ['Collaborators', 'Settings', 'Copy Auth Token', 'Language', 'Account'],
     };
 
@@ -284,6 +287,7 @@ export class DashboardPage extends BasePage {
       menuItems = {
         creator: [],
         commenter: [],
+        limited: [],
         editor: ['Language'],
         viewer: ['Language'],
       };

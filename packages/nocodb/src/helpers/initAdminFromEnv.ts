@@ -11,7 +11,7 @@ import { BaseUser, User } from '~/models';
 import { CacheScope, MetaTable, RootScopes } from '~/utils/globals';
 import { randomTokenString } from '~/services/users/helpers';
 
-const rolesLevel = { owner: 0, creator: 1, editor: 2, commenter: 3, viewer: 4 };
+const rolesLevel = { owner: 0, creator: 1, editor: 2, commenter: 3, limited: 3, viewer: 4 };
 
 export default async function initAdminFromEnv(_ncMeta = Noco.ncMeta) {
   if (process.env.NC_ADMIN_EMAIL && process.env.NC_ADMIN_PASSWORD) {

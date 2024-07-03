@@ -2185,6 +2185,7 @@
                           "viewer": false,
                           "editor": false,
                           "commenter": false,
+                          "limited": false,
                           "guest": false
                         }
                       }
@@ -3862,6 +3863,7 @@
                           "created_at": "2023-03-02 17:04:06",
                           "disabled": {
                             "commenter": false,
+                            "limited": false,
                             "creator": false,
                             "editor": false,
                             "guest": false,
@@ -4207,6 +4209,7 @@
                             "viewer": false,
                             "editor": false,
                             "commenter": false,
+                            "limited": false,
                             "guest": false
                           }
                         }
@@ -5083,6 +5086,7 @@
                           "created_at": "2023-03-02 17:04:06",
                           "disabled": {
                             "commenter": false,
+                            "limited": false,
                             "creator": false,
                             "editor": false,
                             "guest": false,
@@ -9934,7 +9938,7 @@
         }
       }
     },
-    "/api/v1/db/calendar-data/{orgs}/{baseName}/{tableName}/views/{viewName}/countByDate/" : {
+    "/api/v1/db/calendar-data/{orgs}/{baseName}/{tableName}/views/{viewName}/countByDate/": {
       "parameters": [
         {
           "schema": {
@@ -13989,8 +13993,7 @@
         ],
         "description": "Delete comment",
         "requestBody": {
-          "content": {
-          }
+          "content": {}
         }
       }
     },
@@ -18196,7 +18199,7 @@
                 "path": "download/noco/pm0umqsip16i1u5/m8yn03dncqal6ri//iDL5ednaHz2j2Sa3Cl.jpg",
                 "signedPath": "dltemp/lNoLbqB62Jdo5Rmp/1709308800000/noco/pm0umqsip16i1u5/m8yn03dncqal6ri//iDL5ednaHz2j2Sa3Cl.jpg"
               },
-              "Example 2" :{
+              "Example 2": {
                 "mimetype": "image/jpeg",
                 "size": 146143,
                 "title": "2 be loved.jpeg",
@@ -19299,10 +19302,10 @@
             "maxLength": 3000
           },
           "fk_model_id": {
-              "type": "string",
-              "description": "Foreign Key to Model",
-              "example": "md_ehn5izr99m7d45"
-            }
+            "type": "string",
+            "description": "Foreign Key to Model",
+            "example": "md_ehn5izr99m7d45"
+          }
         }
       },
       "Filter": {
@@ -19976,7 +19979,7 @@
                 "$ref": "#/components/schemas/AttachmentReq"
               },
               {
-                "type" : "null"
+                "type": "null"
               }
             ],
             "description": "Banner Image URL"
@@ -19997,7 +20000,7 @@
                 "$ref": "#/components/schemas/AttachmentReq"
               },
               {
-                "type" : "null"
+                "type": "null"
               }
             ],
             "description": "Logo URL"
@@ -23312,6 +23315,7 @@
             "enum": [
               "no-access",
               "commenter",
+              "limited",
               "editor",
               "guest",
               "owner",
@@ -23553,6 +23557,7 @@
           "roles": {
             "enum": [
               "commenter",
+              "limited",
               "editor",
               "viewer"
             ],
@@ -24075,7 +24080,8 @@
         "examples": [
           "string"
         ],
-        "oneOf": [{
+        "oneOf": [
+          {
             "$ref": "#/components/schemas/Id"
           },
           {
@@ -24404,6 +24410,7 @@
                 "created_at": "2023-03-02 17:04:06",
                 "disabled": {
                   "commenter": false,
+                  "limited": false,
                   "creator": false,
                   "editor": false,
                   "guest": false,
@@ -25495,6 +25502,7 @@
             {
               "disabled": {
                 "commenter": true,
+                "limited": true,
                 "creator": true,
                 "editor": true,
                 "guest": true,
@@ -25519,6 +25527,9 @@
             "disabled": {
               "properties": {
                 "commenter": {
+                  "$ref": "#/components/schemas/Bool"
+                },
+                "limited": {
                   "$ref": "#/components/schemas/Bool"
                 },
                 "creator": {
@@ -25701,8 +25712,7 @@
           {
             "list": [
               {
-                "body": {
-                },
+                "body": {},
                 "type": "invite",
                 "is_read": false,
                 "is_deleted": false,
@@ -25970,9 +25980,9 @@
             "description": "Created At"
           },
           "updated_at": {
-              "type": "string",
-              "example": "2020-05-20T12:00:00.000000Z",
-              "description": "Updated At"
+            "type": "string",
+            "example": "2020-05-20T12:00:00.000000Z",
+            "description": "Updated At"
           },
           "is_deleted": {
             "type": "boolean",
@@ -25981,7 +25991,7 @@
         }
       },
       "UserCommentNotificationPreference": {
-        "description" : "Model for User Comment Notification Preference",
+        "description": "Model for User Comment Notification Preference",
         "type": "object",
         "properties": {
           "id": {
@@ -26077,7 +26087,6 @@
             "description": "Updated At"
           }
         }
-
       },
       "Extension": {
         "type": "object",

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { inject } from '@vue/runtime-core'
 
-type Role = 'editor' | 'commenter' | 'viewer'
+type Role = 'editor' | 'commenter' | 'viewer' | 'limited'
 
 const props = defineProps<{
   sourceId: string
@@ -18,7 +18,7 @@ const baseId = computed(() => _projectId.value ?? base.value?.id)
 
 const { includeM2M } = useGlobal()
 
-const roles = ref<string[]>(['editor', 'commenter', 'viewer'])
+const roles = ref<string[]>(['editor', 'commenter', 'viewer','limited'])
 
 const isLoading = ref(false)
 
@@ -29,6 +29,7 @@ const searchInput = ref('')
 const selectAll = ref({
   editor: false,
   commenter: false,
+  limited: false,
   viewer: false,
 })
 
@@ -112,6 +113,11 @@ const columns = [
     width: 120,
   },
   {
+    title: tableHeaderRenderer(t('objects.roleType.limited')),
+    name: 'limited',
+    width: 120,
+  },
+  {
     title: tableHeaderRenderer(t('objects.roleType.viewer')),
     name: 'viewer',
     width: 120,
@@ -176,7 +182,7 @@ const toggleSelectAll = (role: Role) => {
           "
         >
           <template #headerCell="{ column }">
-            <template v-if="['editor', 'commenter', 'viewer'].includes(column.name)">
+            <template v-if="['editor', 'commenter', 'viewer','limited'].includes(column.name)">
               <div class="flex flex-row gap-x-1">
                 <NcCheckbox :checked="selectAll[column.name as Role]" @change="() => toggleSelectAll(column.name)" />
                 <div class="flex capitalize">

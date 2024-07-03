@@ -224,6 +224,7 @@ export class ToolbarPage extends BasePage {
       creator: ['Download', 'Upload'],
       editor: ['Download', 'Upload'],
       commenter: ['Download CSV', 'Download Excel'],
+      limited: ['Download CSV', 'Download Excel'],
       viewer: ['Download CSV', 'Download Excel'],
     };
     const vMenu = this.rootPage.locator('.nc-dropdown-actions-menu:visible');

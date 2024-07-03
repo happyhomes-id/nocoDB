@@ -596,6 +596,7 @@ export const iconMap = {
   role_creator: Creator,
   role_editor: Editor,
   role_commenter: Commentor,
+  role_limited: Commentor,
   role_viewer: Viewer,
   role_super: SuperAdmin,
   role_no_access: NoAccess,

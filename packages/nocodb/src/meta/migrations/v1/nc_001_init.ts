@@ -57,6 +57,13 @@ const up = async (knex) => {
     {
       db_alias: '',
       project_id: '',
+      title: 'limited',
+      description: 'Can view and comment the records but cannot edit anything (Limited)',
+      type: 'SYSTEM',
+    },
+    {
+      db_alias: '',
+      project_id: '',
       title: 'viewer',
       description: 'Can view the records but cannot edit anything',
       type: 'SYSTEM',

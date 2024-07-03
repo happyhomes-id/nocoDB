@@ -26,7 +26,7 @@ import { sanitiseEmailContent } from '~/utils';
 
 @Injectable()
 export class BaseUsersService {
-  constructor(protected appHooksService: AppHooksService) {}
+  constructor(protected appHooksService: AppHooksService) { }
 
   async userList(
     context: NcContext,
@@ -68,6 +68,7 @@ export class BaseUsersService {
         ProjectRoles.CREATOR,
         ProjectRoles.EDITOR,
         ProjectRoles.COMMENTER,
+        ProjectRoles.LIMITED,
         ProjectRoles.VIEWER,
         ProjectRoles.NO_ACCESS,
       ].includes(param.baseUser.roles as ProjectRoles)
@@ -222,6 +223,7 @@ export class BaseUsersService {
         ProjectRoles.CREATOR,
         ProjectRoles.EDITOR,
         ProjectRoles.COMMENTER,
+        ProjectRoles.LIMITED,
         ProjectRoles.VIEWER,
         ProjectRoles.NO_ACCESS,
       ].includes(param.baseUser.roles as ProjectRoles)
@@ -377,9 +379,8 @@ export class BaseUsersService {
           to: email,
           subject: 'Verify email',
           html: ejs.render(template, {
-            signupLink: `${req.ncSiteUrl}${
-              Noco.getConfig()?.dashboardPath
-            }#/signup/${token}`,
+            signupLink: `${req.ncSiteUrl}${Noco.getConfig()?.dashboardPath
+              }#/signup/${token}`,
             baseName: sanitiseEmailContent(req.body?.baseName),
             roles: sanitiseEmailContent(
               (req.body?.roles || '')

@@ -563,6 +563,7 @@
                           "viewer": false,
                           "editor": false,
                           "commenter": false,
+                          "limited": false,
                           "guest": false
                         }
                       }
@@ -2240,6 +2241,7 @@
                           "created_at": "2023-03-02 17:04:06",
                           "disabled": {
                             "commenter": false,
+                            "limited": false,
                             "creator": false,
                             "editor": false,
                             "guest": false,
@@ -2585,6 +2587,7 @@
                             "viewer": false,
                             "editor": false,
                             "commenter": false,
+                            "limited": false,
                             "guest": false
                           }
                         }
@@ -3371,6 +3374,7 @@
                           "created_at": "2023-03-02 17:04:06",
                           "disabled": {
                             "commenter": false,
+                            "limited": false,
                             "creator": false,
                             "editor": false,
                             "guest": false,
@@ -8894,8 +8898,7 @@
         ],
         "description": "Delete comment",
         "requestBody": {
-          "content": {
-          }
+          "content": {}
         }
       }
     },
@@ -11119,59 +11122,60 @@
               },
               "examples": {
                 "Example 1": {
-                  "value": [{
-                    "SingleLineText": "David",
-                    "LongText": "The sunsets in the small coastal town were a breathtaking sight. The sky would transform from a vibrant blue to warm hues of orange and pink as the day came to an end. Locals and tourists alike would gather at the beach, sipping on cool drinks and watching in awe as the sun dipped below the horizon.",
-                    "CreatedAt": "2023-10-16 08:27:59+00:00",
-                    "UpdatedAt": "2023-10-16 08:56:32+00:00",
-                    "Decimal": 23.658,
-                    "Checkbox": true,
-                    "Attachment": [
-                      {
-                        "url": "https://some-s3-server.com/nc/uploads/2023/10/16/some-key/3niqHLngUKiU2Hupe8.jpeg",
-                        "title": "2 be loved.jpeg",
-                        "mimetype": "image/jpeg",
-                        "size": 146143,
-                        "signedUrl": "https://some-s3-server.com/nc/uploads/2023/10/16/signed-url-misc-info"
-                      }
-                    ],
-                    "MultiSelect": "Jan,Feb",
-                    "SingleSelect": "Jan",
-                    "Date": "2023-10-16",
-                    "Year": 2023,
-                    "Time": "06:02:00",
-                    "PhoneNumber": "123456789",
-                    "Email": "a@b.com",
-                    "URL": "www.google.com",
-                    "Currency": 23,
-                    "Percent": 55,
-                    "Duration": 74040,
-                    "Rating": 1,
-                    "JSON": {
-                      "name": "John Doe",
-                      "age": 30,
-                      "email": "johndoe@example.com",
-                      "isSubscribed": true,
-                      "address": {
-                        "street": "123 Main Street",
-                        "city": "Anytown",
-                        "zipCode": "12345"
-                      },
-                      "hobbies": [
-                        "Reading",
-                        "Hiking",
-                        "Cooking"
+                  "value": [
+                    {
+                      "SingleLineText": "David",
+                      "LongText": "The sunsets in the small coastal town were a breathtaking sight. The sky would transform from a vibrant blue to warm hues of orange and pink as the day came to an end. Locals and tourists alike would gather at the beach, sipping on cool drinks and watching in awe as the sun dipped below the horizon.",
+                      "CreatedAt": "2023-10-16 08:27:59+00:00",
+                      "UpdatedAt": "2023-10-16 08:56:32+00:00",
+                      "Decimal": 23.658,
+                      "Checkbox": true,
+                      "Attachment": [
+                        {
+                          "url": "https://some-s3-server.com/nc/uploads/2023/10/16/some-key/3niqHLngUKiU2Hupe8.jpeg",
+                          "title": "2 be loved.jpeg",
+                          "mimetype": "image/jpeg",
+                          "size": 146143,
+                          "signedUrl": "https://some-s3-server.com/nc/uploads/2023/10/16/signed-url-misc-info"
+                        }
                       ],
-                      "scores": {
-                        "math": 95,
-                        "science": 88,
-                        "history": 75
-                      }
-                    },
-                    "DateTime": "2023-10-16 08:56:32+00:00",
-                    "Geometry": "23.23, 36.54",
-                    "Number": 5248
-                  }
+                      "MultiSelect": "Jan,Feb",
+                      "SingleSelect": "Jan",
+                      "Date": "2023-10-16",
+                      "Year": 2023,
+                      "Time": "06:02:00",
+                      "PhoneNumber": "123456789",
+                      "Email": "a@b.com",
+                      "URL": "www.google.com",
+                      "Currency": 23,
+                      "Percent": 55,
+                      "Duration": 74040,
+                      "Rating": 1,
+                      "JSON": {
+                        "name": "John Doe",
+                        "age": 30,
+                        "email": "johndoe@example.com",
+                        "isSubscribed": true,
+                        "address": {
+                          "street": "123 Main Street",
+                          "city": "Anytown",
+                          "zipCode": "12345"
+                        },
+                        "hobbies": [
+                          "Reading",
+                          "Hiking",
+                          "Cooking"
+                        ],
+                        "scores": {
+                          "math": 95,
+                          "science": 88,
+                          "history": 75
+                        }
+                      },
+                      "DateTime": "2023-10-16 08:56:32+00:00",
+                      "Geometry": "23.23, 36.54",
+                      "Number": 5248
+                    }
                   ]
                 }
               }
@@ -11234,19 +11238,22 @@
               },
               "examples": {
                 "Example 1": {
-                  "value": [{
-                    "Id": 6,
-                    "SingleLineText": "Updated text-1",
-                    "DateTime": "2023-10-19 08:56:32+00:00",
-                    "Geometry": "23.232, 36.542",
-                    "Number": 52482
-                  },{
-                    "Id": 7,
-                    "SingleLineText": "Updated text-2",
-                    "DateTime": "2023-10-19 08:56:32+00:00",
-                    "Geometry": "23.232, 36.542",
-                    "Number": 52482
-                  }]
+                  "value": [
+                    {
+                      "Id": 6,
+                      "SingleLineText": "Updated text-1",
+                      "DateTime": "2023-10-19 08:56:32+00:00",
+                      "Geometry": "23.232, 36.542",
+                      "Number": 52482
+                    },
+                    {
+                      "Id": 7,
+                      "SingleLineText": "Updated text-2",
+                      "DateTime": "2023-10-19 08:56:32+00:00",
+                      "Geometry": "23.232, 36.542",
+                      "Number": 52482
+                    }
+                  ]
                 }
               }
             }
@@ -11609,7 +11616,6 @@
             "name": "limit",
             "description": "Enables you to set a limit on the number of linked records you want to retrieve in your API response. By default, your response includes all the available linked records, but by using this parameter, you can control the quantity you receive.\n\nExample: `limit=100` will constrain your response to the first 100 linked records in the dataset."
           },
-
           {
             "$ref": "#/components/parameters/xc-auth"
           }
@@ -12043,7 +12049,7 @@
                 "path": "download/noco/pm0umqsip16i1u5/m8yn03dncqal6ri//iDL5ednaHz2j2Sa3Cl.jpg",
                 "signedPath": "dltemp/lNoLbqB62Jdo5Rmp/1709308800000/noco/pm0umqsip16i1u5/m8yn03dncqal6ri//iDL5ednaHz2j2Sa3Cl.jpg"
               },
-              "Example 2" :{
+              "Example 2": {
                 "mimetype": "image/jpeg",
                 "size": 146143,
                 "title": "2 be loved.jpeg",
@@ -13821,7 +13827,7 @@
                 "$ref": "#/components/schemas/AttachmentReq"
               },
               {
-                "type" : "null"
+                "type": "null"
               }
             ],
             "description": "Banner Image URL"
@@ -13842,7 +13848,7 @@
                 "$ref": "#/components/schemas/AttachmentReq"
               },
               {
-                "type" : "null"
+                "type": "null"
               }
             ],
             "description": "Logo URL."
@@ -16881,6 +16887,7 @@
             "enum": [
               "no-access",
               "commenter",
+              "limited",
               "editor",
               "guest",
               "owner",
@@ -17122,6 +17129,7 @@
           "roles": {
             "enum": [
               "commenter",
+              "limited",
               "editor",
               "viewer"
             ],
@@ -17929,6 +17937,7 @@
                 "created_at": "2023-03-02 17:04:06",
                 "disabled": {
                   "commenter": false,
+                  "limited": false,
                   "creator": false,
                   "editor": false,
                   "guest": false,
@@ -19000,6 +19009,7 @@
             {
               "disabled": {
                 "commenter": true,
+                "limited": true,
                 "creator": true,
                 "editor": true,
                 "guest": true,
@@ -19024,6 +19034,9 @@
             "disabled": {
               "properties": {
                 "commenter": {
+                  "$ref": "#/components/schemas/Bool"
+                },
+                "limited": {
                   "$ref": "#/components/schemas/Bool"
                 },
                 "creator": {
@@ -19422,8 +19435,7 @@
           {
             "list": [
               {
-                "body": {
-                },
+                "body": {},
                 "type": "invite",
                 "is_read": false,
                 "is_deleted": false,

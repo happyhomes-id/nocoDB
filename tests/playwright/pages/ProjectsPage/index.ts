@@ -261,6 +261,7 @@ export class ProjectsPage extends BasePage {
         break;
       case 'editor':
       case 'commenter':
+      case 'limited':
       case 'viewer':
         await expect(this.buttonColorSelector).toBeVisible({ visible: false });
         await expect(this.buttonEditProject).toBeVisible({ visible: false });

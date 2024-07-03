@@ -36,11 +36,12 @@ const roleAlias = {
   [WorkspaceUserRoles.VIEWER]: 'Workspace Viewer',
   [WorkspaceUserRoles.CREATOR]: 'Workspace Creator',
   [WorkspaceUserRoles.EDITOR]: 'Workspace Editor',
-  [WorkspaceUserRoles.COMMENTER]: 'Workspace Commenter',
+  [WorkspaceUserRoles.COMMENTER]: 'Workspace Commenter', 
+  [WorkspaceUserRoles.LIMITED]: 'Workspace Limited', 
   [ProjectRoles.CREATOR]: 'Base Creator',
   [ProjectRoles.EDITOR]: 'Base Editor',
   [ProjectRoles.VIEWER]: 'Base Viewer',
-  [ProjectRoles.COMMENTER]: 'Base Commenter',
+  [ProjectRoles.LIMITED]: 'Base Limited',
   [ProjectRoles.OWNER]: 'Base Owner',
 }
 

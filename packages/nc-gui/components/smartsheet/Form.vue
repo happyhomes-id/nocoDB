@@ -1660,7 +1660,7 @@ useEventListener(
       </div>
     </template>
     <div
-      v-if="user?.base_roles?.viewer || user?.base_roles?.commenter"
+      v-if="user?.base_roles?.viewer || user?.base_roles?.commenter || user?.base_roles?.limited  "
       class="absolute inset-0 bg-black/40 z-500 grid place-items-center"
     >
       <div class="text-center bg-white px-6 py-8 rounded-xl max-w-lg">

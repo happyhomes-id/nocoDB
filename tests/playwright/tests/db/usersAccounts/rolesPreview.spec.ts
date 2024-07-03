@@ -4,7 +4,8 @@ import setup, { unsetup } from '../../../setup';
 import { ToolbarPage } from '../../../pages/Dashboard/common/Toolbar';
 import { SettingsPage, SettingTab } from '../../../pages/Dashboard/Settings';
 
-const roles = ['Editor', 'Commenter', 'Viewer'];
+// LIMITED
+const roles = ['Editor', 'Commenter', 'Viewer', 'Limited'];
 
 test.describe.skip('Preview Mode', () => {
   test.slow();
@@ -39,9 +40,11 @@ test.describe.skip('Preview Mode', () => {
     await settings.dataSources.openAcl();
     await settings.dataSources.acl.toggle({ table: 'Language', role: 'editor' });
     await settings.dataSources.acl.toggle({ table: 'Language', role: 'commenter' });
+    await settings.dataSources.acl.toggle({ table: 'Language', role: 'limited' });
     await settings.dataSources.acl.toggle({ table: 'Language', role: 'viewer' });
     await settings.dataSources.acl.toggle({ table: 'CustomerList', role: 'editor' });
     await settings.dataSources.acl.toggle({ table: 'CustomerList', role: 'commenter' });
+    await settings.dataSources.acl.toggle({ table: 'CustomerList', role: 'limited' });
     await settings.dataSources.acl.toggle({ table: 'CustomerList', role: 'viewer' });
     await settings.dataSources.acl.save();
     await settings.close();

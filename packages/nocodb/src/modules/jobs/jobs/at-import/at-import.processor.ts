@@ -109,7 +109,7 @@ export class AtImportProcessor {
     private readonly jobsLogService: JobsLogService,
     private readonly gridColumnService: GridColumnsService,
     private readonly telemetryService: TelemetryService,
-  ) {}
+  ) { }
 
   @Process(JobTypes.AtImport)
   async job(job: Job) {
@@ -246,8 +246,7 @@ export class AtImportProcessor {
         `tn[${tbl}] cn[${col}] type[${type}] :: ${reason}`,
       );
       logWarning(
-        `Skipped${tbl ? ` ${tbl} :: ` : ``}${col ? `${col}` : ``}${
-          type ? ` (${type})` : ``
+        `Skipped${tbl ? ` ${tbl} :: ` : ``}${col ? `${col}` : ``}${type ? ` (${type})` : ``
         } :: ${reason}`,
       );
     };
@@ -472,8 +471,7 @@ export class AtImportProcessor {
               )
             ) {
               logWarning(
-                `Duplicate select option found: ${col.name} :: ${
-                  (value as any).name
+                `Duplicate select option found: ${col.name} :: ${(value as any).name
                 }`,
               );
               continue;
@@ -733,8 +731,7 @@ export class AtImportProcessor {
         if (aTblLinkColumns.length) {
           for (let i = 0; i < aTblLinkColumns.length; i++) {
             logDetailed(
-              `[${idx + 1}/${aTblSchema.length}] Configuring Links :: [${
-                i + 1
+              `[${idx + 1}/${aTblSchema.length}] Configuring Links :: [${i + 1
               }/${aTblLinkColumns.length}] ${aTblSchema[idx].name}`,
             );
 
@@ -843,9 +840,9 @@ export class AtImportProcessor {
               const x = ncLinkMappingTable.findIndex(
                 (x) =>
                   x.aTbl.tblId ===
-                    aTblLinkColumns[i].typeOptions.foreignTableId &&
+                  aTblLinkColumns[i].typeOptions.foreignTableId &&
                   x.aTbl.id ===
-                    aTblLinkColumns[i].typeOptions.symmetricColumnId,
+                  aTblLinkColumns[i].typeOptions.symmetricColumnId,
               );
 
               let _perfStart = recordPerfStart();
@@ -895,9 +892,9 @@ export class AtImportProcessor {
                   (col) =>
                     isLinksOrLTAR(col) &&
                     col.colOptions.fk_child_column_id ===
-                      parentLinkColumn.colOptions.fk_child_column_id &&
+                    parentLinkColumn.colOptions.fk_child_column_id &&
                     col.colOptions.fk_parent_column_id ===
-                      parentLinkColumn.colOptions.fk_parent_column_id,
+                    parentLinkColumn.colOptions.fk_parent_column_id,
                 );
               } else {
                 // for mm:
@@ -907,11 +904,11 @@ export class AtImportProcessor {
                   (col) =>
                     isLinksOrLTAR(col) &&
                     col.colOptions.fk_child_column_id ===
-                      parentLinkColumn.colOptions.fk_parent_column_id &&
+                    parentLinkColumn.colOptions.fk_parent_column_id &&
                     col.colOptions.fk_parent_column_id ===
-                      parentLinkColumn.colOptions.fk_child_column_id &&
+                    parentLinkColumn.colOptions.fk_child_column_id &&
                     col.colOptions.fk_mm_model_id ===
-                      parentLinkColumn.colOptions.fk_mm_model_id,
+                    parentLinkColumn.colOptions.fk_mm_model_id,
                 );
               }
 
@@ -973,8 +970,7 @@ export class AtImportProcessor {
           // Lookup
           for (let i = 0; i < aTblColumns.length; i++) {
             logDetailed(
-              `[${idx + 1}/${aTblSchema.length}] Configuring Lookup :: [${
-                i + 1
+              `[${idx + 1}/${aTblSchema.length}] Configuring Lookup :: [${i + 1
               }/${aTblColumns.length}] ${aTblSchema[idx].name}`,
             );
 
@@ -1091,8 +1087,7 @@ export class AtImportProcessor {
           );
 
           logDetailed(
-            `Configuring Nested Lookup: Level-${level} [${i + 1}/${nestedCnt} ${
-              ncName.title
+            `Configuring Nested Lookup: Level-${level} [${i + 1}/${nestedCnt} ${ncName.title
             }]`,
           );
 
@@ -1170,8 +1165,7 @@ export class AtImportProcessor {
           // rollup exist
           for (let i = 0; i < aTblColumns.length; i++) {
             logDetailed(
-              `[${idx + 1}/${aTblSchema.length}] Configuring Rollup :: [${
-                i + 1
+              `[${idx + 1}/${aTblSchema.length}] Configuring Rollup :: [${i + 1
               }/${aTblColumns.length}] ${aTblSchema[idx].name}`,
             );
 
@@ -1181,8 +1175,8 @@ export class AtImportProcessor {
               aTblColumns[i].type === 'count'
                 ? 'count'
                 : getRollupNcFunction(
-                    aTblColumns[i].typeOptions.formulaTextParsed,
-                  );
+                  aTblColumns[i].typeOptions.formulaTextParsed,
+                );
 
             if (ncRollupFn === '' || ncRollupFn === undefined) {
               updateMigrationSkipLog(
@@ -1325,8 +1319,7 @@ export class AtImportProcessor {
         );
 
         logDetailed(
-          `Configuring Lookup over Rollup :: [${i + 1}/${nestedCnt}] ${
-            ncName.title
+          `Configuring Lookup over Rollup :: [${i + 1}/${nestedCnt}] ${ncName.title
           }`,
         );
 
@@ -1366,8 +1359,7 @@ export class AtImportProcessor {
     const nocoSetPrimary = async (aTblSchema) => {
       for (let idx = 0; idx < aTblSchema.length; idx++) {
         logDetailed(
-          `[${idx + 1}/${aTblSchema.length}] Configuring Display value : ${
-            aTblSchema[idx].name
+          `[${idx + 1}/${aTblSchema.length}] Configuring Display value : ${aTblSchema[idx].name
           }`,
         );
 
@@ -1645,8 +1637,7 @@ export class AtImportProcessor {
           )?.name;
 
           logBasic(
-            `:: [${configuredViews + i + 1}/${rtc.view.total}] Gallery : ${
-              aTblSchema[idx].name
+            `:: [${configuredViews + i + 1}/${rtc.view.total}] Gallery : ${aTblSchema[idx].name
             } / ${viewName}`,
           );
 
@@ -1688,8 +1679,7 @@ export class AtImportProcessor {
           )?.name;
 
           logBasic(
-            `:: [${configuredViews + i + 1}/${rtc.view.total}] Form : ${
-              aTblSchema[idx].name
+            `:: [${configuredViews + i + 1}/${rtc.view.total}] Form : ${aTblSchema[idx].name
             } / ${viewName}`,
           );
 
@@ -1730,8 +1720,7 @@ export class AtImportProcessor {
           recordPerfStats(_perfStart, 'dbView.formCreate');
 
           logDetailed(
-            `[${idx + 1}/${aTblSchema.length}][Form View][${i + 1}/${
-              formViews.length
+            `[${idx + 1}/${aTblSchema.length}][Form View][${i + 1}/${formViews.length
             }] Create ${viewName}`,
           );
 
@@ -1791,8 +1780,7 @@ export class AtImportProcessor {
           let ncViewId = viewList?.list?.find((x) => x.tn === viewName)?.id;
 
           logBasic(
-            `:: [${viewCnt + i + 1}/${rtc.view.total}] Grid : ${
-              aTblSchema[idx].name
+            `:: [${viewCnt + i + 1}/${rtc.view.total}] Grid : ${aTblSchema[idx].name
             } / ${viewName}`,
           );
 
@@ -1862,6 +1850,7 @@ export class AtImportProcessor {
         create: 'creator',
         edit: 'editor',
         comment: 'commenter',
+        limit: 'limited',
         read: 'viewer',
         none: 'viewer',
       };

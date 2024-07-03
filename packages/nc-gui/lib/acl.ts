@@ -109,6 +109,15 @@ const rolePermissions = {
       commentCount: true,
     },
   },
+  [ProjectRoles.LIMITED]: {
+    include: {
+      commentDelete: true,
+      commentResolve: true,
+      commentEdit: true,
+      commentList: true,
+      commentCount: true,
+    },
+  },
   [ProjectRoles.VIEWER]: {
     include: {
       baseSettings: true,

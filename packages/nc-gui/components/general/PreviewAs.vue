@@ -16,6 +16,7 @@ const { previewAs } = useGlobal()
 const roleList = [
   { value: ProjectRoles.EDITOR, label: t('objects.roleType.editor') },
   { value: ProjectRoles.COMMENTER, label: t('objects.roleType.commenter') },
+  { value: ProjectRoles.LIMITED, label: t('objects.roleType.limited') },
   { value: ProjectRoles.VIEWER, label: t('objects.roleType.viewer') },
 ]
 
@@ -25,6 +26,7 @@ const roleIcon = {
   editor: PhPencilCircleThin,
   viewer: iconMap.eye,
   commenter: PhChtTeardropTextThin,
+  limited: PhChtTeardropTextThin,
 }
 
 const position = ref({
