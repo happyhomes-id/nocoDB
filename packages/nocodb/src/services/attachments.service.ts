@@ -13,6 +13,8 @@ import mimetypes, { mimeIcons } from '~/utils/mimeTypes';
 import { PresignedUrl } from '~/models';
 import { utf8ify } from '~/helpers/stringHelpers';
 import { NcError } from '~/helpers/catchError';
+import { buffer } from 'stream/consumers';
+const sharp = require('sharp');
 
 @Injectable()
 export class AttachmentsService {
@@ -40,12 +42,21 @@ export class AttachmentsService {
     }
 
     queue.addAll(
-      param.files?.map((file) => async () => {
+      param.files?.map((file, index) => async () => {
         try {
           const originalName = utf8ify(file.originalname);
-          const fileName = `${path.parse(originalName).name}_${nanoid(5,)}${path.extname(originalName)}`;
+          let fileName = `${path.parse(originalName).name}_${nanoid(5,)}${path.extname(originalName)}`;
+          let compressedFilePath = path.join(destPath, `compress_${fileName}`);
 
-          const url = await storageAdapter.fileCreate(
+          // if (file.mimetype.startsWith('image/')) {
+          //   // Compress the file using sharp
+          //   await sharp(file.path)
+          //     .resize({ width: 500 })
+          //     .toFormat('webp', { quality: 80 })
+          //     .toFile(compressedFilePath);
+          // }
+
+          let url = await storageAdapter.fileCreate(
             slash(path.join(destPath, fileName)),
             file,
           );
