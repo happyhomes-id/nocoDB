@@ -45,20 +45,36 @@ export class AttachmentsService {
       param.files?.map((file, index) => async () => {
         try {
           const originalName = utf8ify(file.originalname);
+          const date = new Date
           let fileName = `${path.parse(originalName).name}_${nanoid(5,)}${path.extname(originalName)}`;
           let compressedFilePath = path.join(destPath, `compress_${fileName}`);
 
-          // if (file.mimetype.startsWith('image/')) {
-          //   // Compress the file using sharp
-          //   await sharp(file.path)
-          //     .resize({ width: 500 })
-          //     .toFormat('webp', { quality: 80 })
-          //     .toFile(compressedFilePath);
-          // }
+          console.log(file);
+
+
+          if (file.mimetype.startsWith('image/')) {
+            // Compress the file using sharp
+            // await sharp(file.path)
+            //   .resize({ width: 500 })
+            //   .toFormat('webp', { quality: 80 })
+            //   .toFile(compressedFilePath);
+
+            const data = await sharp(file.path)
+              // .resize({ width: 1000 })
+              .webp({ lossless: false, quality: 10 })
+              .toFile(compressedFilePath);
+
+            console.log('compress success', data);
+          }
 
           let url = await storageAdapter.fileCreate(
             slash(path.join(destPath, fileName)),
-            file,
+            {
+              mimetype: file.mimetype,
+              originalname: file.originalname,
+              path: compressedFilePath,
+              size: file.size
+            },
           );
 
           const attachment: {
