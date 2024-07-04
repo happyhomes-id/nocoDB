@@ -18,7 +18,7 @@ import { NcError } from '~/helpers/catchError';
 export class AttachmentsService {
   protected logger = new Logger(AttachmentsService.name);
 
-  constructor(private readonly appHooksService: AppHooksService) {}
+  constructor(private readonly appHooksService: AppHooksService) { }
 
   async upload(param: { path?: string; files: FileType[]; req: NcRequest }) {
     // TODO: add getAjvValidatorMw
@@ -43,9 +43,7 @@ export class AttachmentsService {
       param.files?.map((file) => async () => {
         try {
           const originalName = utf8ify(file.originalname);
-          const fileName = `${path.parse(originalName).name}_${nanoid(
-            5,
-          )}${path.extname(originalName)}`;
+          const fileName = `${path.parse(originalName).name}_${nanoid(5,)}${path.extname(originalName)}`;
 
           const url = await storageAdapter.fileCreate(
             slash(path.join(destPath, fileName)),
@@ -74,14 +72,18 @@ export class AttachmentsService {
             // then store the attachment path only
             // url will be constructed in `useAttachmentCell`
             attachment.path = path.join(
-              'download',
+              '',
               filePath.join('/'),
               fileName,
             );
 
             attachment.signedPath = await PresignedUrl.getSignedUrl({
-              path: attachment.path.replace(/^download\//, ''),
+              path: attachment.path.replace(/^\//, ''),
             });
+
+            // console.log(attachment);
+            // return
+
           } else {
             if (attachment.url.includes('.amazonaws.com/')) {
               const relativePath = decodeURI(
@@ -148,9 +150,7 @@ export class AttachmentsService {
           const { url, fileName: _fileName } = urlMeta;
           const fileNameWithExt = _fileName || url.split('/').pop();
 
-          const fileName = `${path.parse(fileNameWithExt).name}_${nanoid(
-            5,
-          )}${path.extname(fileNameWithExt)}`;
+          const fileName = `${path.parse(fileNameWithExt).name}_${nanoid(5,)}${path.extname(fileNameWithExt)}`;
 
           const attachmentUrl: string | null =
             await storageAdapter.fileCreateByUrl(
@@ -175,6 +175,8 @@ export class AttachmentsService {
             size: urlMeta.size,
             icon: mimeIcons[path.extname(fileName).slice(1)] || undefined,
           });
+
+
         } catch (e) {
           errors.push(e);
         }
