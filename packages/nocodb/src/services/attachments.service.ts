@@ -72,12 +72,14 @@ export class AttachmentsService {
             // then store the attachment path only
             // url will be constructed in `useAttachmentCell`
             attachment.path = path.join(
+              // 'download',
               '',
               filePath.join('/'),
               fileName,
             );
 
             attachment.signedPath = await PresignedUrl.getSignedUrl({
+              // path: attachment.path.replace(/^download\//, ''),
               path: attachment.path.replace(/^\//, ''),
             });
 
