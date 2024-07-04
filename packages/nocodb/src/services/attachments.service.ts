@@ -49,9 +49,6 @@ export class AttachmentsService {
           let fileName = `${path.parse(originalName).name}_${nanoid(5,)}${path.extname(originalName)}`;
           let compressedFilePath = path.join(destPath, `compress_${fileName}`);
 
-          console.log(file);
-
-
           if (file.mimetype.startsWith('image/')) {
             // Compress the file using sharp
             // await sharp(file.path)
