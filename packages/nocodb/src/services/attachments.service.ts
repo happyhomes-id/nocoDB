@@ -166,7 +166,7 @@ export class AttachmentsService {
           if (!attachmentUrl) {
             // then store the attachment path only
             // url will be constructed in `useAttachmentCell`
-            attachmentPath = `download/${filePath.join('/')}/${fileName}`;
+            attachmentPath = `uploads/${filePath.join('/')}/${fileName}`;
           }
 
           attachments.push({
