@@ -50,22 +50,18 @@ export class AttachmentsService {
           let compressedFilePath = path.join(destPath, `compress_${fileName}`);
 
           if (file.mimetype.startsWith('image/')) {
+            
             // Compress the file using sharp
-            // await sharp(file.path)
-            //   .resize({ width: 500 })
-            //   .toFormat('webp', { quality: 80 })
-            //   .toFile(compressedFilePath);
-
             const data = await sharp(file.path)
-              // .resize({ width: 1000 })
-              .webp({ lossless: false, quality: 10 })
+                // .resize({ width: 1000 })
+              .webp({ lossless: false, quality: 20 })
               .toFile(compressedFilePath);
 
             console.log('compress success', data);
           }
 
           let url = await storageAdapter.fileCreate(
-            slash(path.join(destPath, fileName)),
+            slash(path.join(destPath, `${fileName}`)),
             {
               mimetype: file.mimetype,
               originalname: file.originalname,
@@ -107,10 +103,10 @@ export class AttachmentsService {
               path: attachment.path.replace(/^\//, ''),
             });
 
-            // console.log(attachment);
-            // return
 
           } else {
+            console.log('form');
+
             if (attachment.url.includes('.amazonaws.com/')) {
               const relativePath = decodeURI(
                 attachment.url.split('.amazonaws.com/')[1],
