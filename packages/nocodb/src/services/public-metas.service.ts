@@ -78,10 +78,10 @@ export class PublicMetasService {
             (c1) =>
               isLinksOrLTAR(c1.uidt) &&
               (<LinkToAnotherRecordColumn>c1.colOptions).type ===
-                RelationTypes.BELONGS_TO &&
+              RelationTypes.BELONGS_TO &&
               view.columns.some((vc) => vc.fk_column_id === c1.id && vc.show) &&
               (<LinkToAnotherRecordColumn>c1.colOptions).fk_child_column_id ===
-                c.fk_column_id,
+              c.fk_column_id,
           )
         );
       })

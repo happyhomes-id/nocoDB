@@ -2,6 +2,7 @@ const useAttachment = () => {
   const { appInfo } = useGlobal()
 
   const getPossibleAttachmentSrc = (item: Record<string, any>) => {
+
     const res: string[] = []
     if (item?.data) res.push(item.data)
     if (item?.file) res.push(window.URL.createObjectURL(item.file))
@@ -13,6 +14,7 @@ const useAttachment = () => {
   }
 
   const getAttachmentSrc = async (item: Record<string, any>) => {
+    console.log('========', item)
     if (item?.data) {
       return item.data
     }
@@ -24,7 +26,7 @@ const useAttachment = () => {
         if (res.ok) {
           return source
         }
-      } catch {}
+      } catch { }
     }
     // if no source can be fetched, it could be probably blocked by CORS
     // return signed url / original url / built url anyway

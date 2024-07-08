@@ -81,6 +81,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
 
     /** save a file on select / drop, either locally (in-memory) or in the db */
     async function onFileSelect(selectedFiles: FileList | File[], selectedFileUrls?: AttachmentReqType[]) {
+
       if (!selectedFiles.length && !selectedFileUrls?.length) return
 
       const attachmentMeta = {
@@ -95,6 +96,15 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
       const imageUrls: AttachmentReqType[] = []
 
       for (const file of selectedFiles.length ? selectedFiles : selectedFileUrls || []) {
+        // console.log(file, '===============');
+        const filesss: any = file
+        if (filesss.name.endsWith("heic") || filesss.name.endsWith("HEIC")) {
+          
+          console.log(filesss);
+
+          return
+        }
+
         if (appInfo.value.ee) {
           // verify number of files
           if (
@@ -102,8 +112,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
             attachmentMeta.maxNumberOfAttachments
           ) {
             message.error(
-              `You can only upload at most ${attachmentMeta.maxNumberOfAttachments} file${
-                attachmentMeta.maxNumberOfAttachments > 1 ? 's' : ''
+              `You can only upload at most ${attachmentMeta.maxNumberOfAttachments} file${attachmentMeta.maxNumberOfAttachments > 1 ? 's' : ''
               } to this cell.`,
             )
             return
@@ -112,8 +121,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
           // verify file size
           if (file?.size && file.size > attachmentMeta.maxAttachmentSize * 1024 * 1024) {
             message.error(
-              `The size of ${(file as File)?.name || (file as AttachmentReqType)?.fileName} exceeds the maximum file size ${
-                attachmentMeta.maxAttachmentSize
+              `The size of ${(file as File)?.name || (file as AttachmentReqType)?.fileName} exceeds the maximum file size ${attachmentMeta.maxAttachmentSize
               } MB.`,
             )
             continue
@@ -128,8 +136,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
             )
           ) {
             message.error(
-              `${(file as File)?.name || (file as AttachmentReqType)?.fileName} has the mime type ${
-                (file as File)?.type || (file as AttachmentReqType)?.mimetype
+              `${(file as File)?.name || (file as AttachmentReqType)?.fileName} has the mime type ${(file as File)?.type || (file as AttachmentReqType)?.mimetype
               } which is not allowed in this column.`,
             )
             continue
