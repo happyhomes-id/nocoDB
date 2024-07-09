@@ -8,6 +8,8 @@ import MdiFileWordOutline from '~icons/mdi/file-word-outline'
 import MdiFilePowerpointBox from '~icons/mdi/file-powerpoint-box'
 import MdiFileExcelOutline from '~icons/mdi/file-excel-outline'
 import IcOutlineInsertDriveFile from '~icons/ic/outline-insert-drive-file'
+import imageCompression from 'browser-image-compression'
+import heic2any from 'heic2any';
 
 export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
   (updateModelValue: (data: string | Record<string, any>[]) => void) => {
@@ -95,14 +97,53 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
 
       const imageUrls: AttachmentReqType[] = []
 
-      for (const file of selectedFiles.length ? selectedFiles : selectedFileUrls || []) {
-        // console.log(file, '===============');
+      for (let file of selectedFiles.length ? selectedFiles : selectedFileUrls || []) {
         const filesss: any = file
-        if (filesss.name.endsWith("heic") || filesss.name.endsWith("HEIC")) {
-          
-          console.log(filesss);
 
-          return
+        if (filesss.name.endsWith("heic") || filesss.name.endsWith("HEIC")) {
+          const conversionResult = await heic2any({
+            blob: filesss,
+            toType: 'image/jpeg',
+            quality: 1,
+          });
+
+          const jpegBlob = conversionResult instanceof Blob ? conversionResult : conversionResult[0];
+
+          const jpegFile = new File([jpegBlob], filesss.name.replace(/\.[^/.]+$/, '') + '.jpg', {
+            type: 'image/jpeg',
+            lastModified: filesss.lastModified,
+          });
+
+          const options = {
+            maxSizeMB: 0.5,          // Maximum size in MB
+            // maxWidthOrHeight: 1024, // Maximum width or height
+            useWebWorker: true,    // Use web worker for processing
+            fileType: 'image/jpeg', // Output format
+          }
+
+          try {
+            file = await imageCompression(jpegFile, options)
+            console.log(file);
+
+          } catch (error) {
+            console.error('Error during image compression:', error)
+          }
+
+        } else if ((filesss as File).type.startsWith('image/')) {
+          const options = {
+            maxSizeMB: 0.5,          // Maximum size in MB
+            // maxWidthOrHeight: 1024, // Maximum width or height
+            useWebWorker: true,    // Use web worker for processing
+            fileType: 'image/jpeg', // Output format
+          }
+
+          try {
+            file = await imageCompression(filesss, options)
+            console.log(file);
+
+          } catch (error) {
+            console.error('Error during image compression:', error)
+          }
         }
 
         if (appInfo.value.ee) {
