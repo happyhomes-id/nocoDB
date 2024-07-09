@@ -53,50 +53,55 @@ export class AttachmentsService {
           let compressedFilePath = path.join(destPath, `compress_${fileName}`);
           const fileExtension = file.path.split('.').pop();
 
-          let url
-          if (file.mimetype.startsWith('image/')) {
-            const data = await sharp(file.path)
-              // .resize({ width: 1000 })
-              .webp({ lossless: false, quality: 20 })
-              .toFile(compressedFilePath);
+          let url = await storageAdapter.fileCreate(
+            slash(path.join(destPath, fileName)),
+            file
+          );
 
-            console.log('compress success', data);
-            url = await storageAdapter.fileCreate(
-              slash(path.join(destPath, fileName)),
-              {
-                mimetype: file.mimetype,
-                originalname: file.originalname,
-                path: file.mimetype.startsWith('image/') ? compressedFilePath : destPath,
-                size: file.size
-              },
-            );
-          } else if (file.originalname.endsWith('heic') || file.originalname.endsWith('HEIC')) {
+          // let url
+          // if (file.mimetype.startsWith('image/')) {
+          //   const data = await sharp(file.path)
+          //     // .resize({ width: 1000 })
+          //     .webp({ lossless: false, quality: 20 })
+          //     .toFile(compressedFilePath);
 
-            const inputBuffer = await promisify(fs.readFile)(file.path);
-            const outputBuffer = await convert({
-              buffer: inputBuffer, // the HEIC file buffer
-              format: 'JPEG',      // output format
-              quality: 0.1        // the jpeg compression quality, between 0 and 1
-            });
+          //   console.log('compress success', data);
+          //   url = await storageAdapter.fileCreate(
+          //     slash(path.join(destPath, fileName)),
+          //     {
+          //       mimetype: file.mimetype,
+          //       originalname: file.originalname,
+          //       path: file.mimetype.startsWith('image/') ? compressedFilePath : destPath,
+          //       size: file.size
+          //     },
+          //   );
+          // } else if (file.originalname.endsWith('heic') || file.originalname.endsWith('HEIC')) {
 
-            await promisify(fs.writeFile)(path.join(destPath, `${file.filename}.jpg`), outputBuffer);
+          //   const inputBuffer = await promisify(fs.readFile)(file.path);
+          //   const outputBuffer = await convert({
+          //     buffer: inputBuffer, // the HEIC file buffer
+          //     format: 'JPEG',      // output format
+          //     quality: 0.1        // the jpeg compression quality, between 0 and 1
+          //   });
 
-            url = await storageAdapter.fileCreate(
-              slash(path.join(destPath, fileName)),
-              {
-                mimetype: file.mimetype,
-                originalname: file.originalname,
-                path: path.join(destPath, `${file.filename}.jpg`),
-                size: outputBuffer.length
-              },
-            );
+          //   await promisify(fs.writeFile)(path.join(destPath, `${file.filename}.jpg`), outputBuffer);
 
-          } else {
-            url = await storageAdapter.fileCreate(
-              slash(path.join(destPath, fileName)),
-              file
-            );
-          }
+          //   url = await storageAdapter.fileCreate(
+          //     slash(path.join(destPath, fileName)),
+          //     {
+          //       mimetype: file.mimetype,
+          //       originalname: file.originalname,
+          //       path: path.join(destPath, `${file.filename}.jpg`),
+          //       size: outputBuffer.length
+          //     },
+          //   );
+
+          // } else {
+          //   url = await storageAdapter.fileCreate(
+          //     slash(path.join(destPath, fileName)),
+          //     file
+          //   );
+          // }
 
           const attachment: {
             url?: string;
@@ -125,6 +130,7 @@ export class AttachmentsService {
               filePath.join('/'),
               fileName,
             );
+
 
             if (file.originalname.endsWith('heic') || file.originalname.endsWith('HEIC')) {
 
@@ -292,7 +298,7 @@ export class AttachmentsService {
   }
 
   previewAvailable(mimetype: string) {
-    const available = [ 'image', 'pdf', 'text/plain'];
+    const available = ['image', 'pdf', 'text/plain'];
     if (available.some((type) => mimetype.includes(type))) {
       return true;
     }

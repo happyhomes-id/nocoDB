@@ -123,7 +123,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
 
           try {
             file = await imageCompression(jpegFile, options)
-            console.log(file);
+            // console.log(file);
 
           } catch (error) {
             console.error('Error during image compression:', error)
@@ -139,7 +139,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
 
           try {
             file = await imageCompression(filesss, options)
-            console.log(file);
+            // console.log(file);
 
           } catch (error) {
             console.error('Error during image compression:', error)
