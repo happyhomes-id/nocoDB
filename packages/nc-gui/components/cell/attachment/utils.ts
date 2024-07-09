@@ -100,7 +100,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
       for (let file of selectedFiles.length ? selectedFiles : selectedFileUrls || []) {
         const filesss: any = file
 
-        if (filesss.name.endsWith("heic") || filesss.name.endsWith("HEIC")) {
+        if (filesss.name.endsWith("heic") || filesss.name.endsWith("HEIC") || filesss.name.endsWith("Heic")) {
           const conversionResult = await heic2any({
             blob: filesss,
             toType: 'image/jpeg',
