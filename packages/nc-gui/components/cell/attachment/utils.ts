@@ -201,45 +201,48 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
         }
       }
 
-      if (files.length && isPublic.value && isForm.value) {
-        const newFiles = await Promise.all<AttachmentType>(
-          Array.from(files).map(
-            (file) =>
-              new Promise<AttachmentType>((resolve) => {
-                const res: { file: File; title: string; mimetype: string; data?: any } = {
-                  ...file,
-                  file,
-                  title: file.name,
-                  mimetype: file.type,
-                }
+      // NON ACTIVE ON SUBMIT
+      // if (files.length && isPublic.value && isForm.value) {
+      //   const newFiles = await Promise.all<AttachmentType>(
+      //     Array.from(files).map(
+      //       (file) =>
+      //         new Promise<AttachmentType>((resolve) => {
+      //           const res: { file: File; title: string; mimetype: string; data?: any } = {
+      //             ...file,
+      //             file,
+      //             title: file.name,
+      //             mimetype: file.type,
+      //           }
 
-                if (isImage(file.name, (<any>file).mimetype ?? file.type)) {
-                  const reader = new FileReader()
+      //           if (isImage(file.name, (<any>file).mimetype ?? file.type)) {
+      //             const reader = new FileReader()
 
-                  reader.onload = (e) => {
-                    res.data = e.target?.result
-                    resolve(res)
-                  }
+      //             reader.onload = (e) => {
+      //               res.data = e.target?.result
+      //               resolve(res)
+      //             }
 
-                  reader.onerror = () => {
-                    resolve(res)
-                  }
+      //             reader.onerror = () => {
+      //               resolve(res)
+      //             }
 
-                  reader.readAsDataURL(file)
-                } else {
-                  resolve(res)
-                }
-              }),
-          ),
-        )
-        attachments.value = [...attachments.value, ...newFiles]
+      //             reader.readAsDataURL(file)
+      //           } else {
+      //             resolve(res)
+      //           }
+      //         }),
+      //     ),
+      //   )
+      //   attachments.value = [...attachments.value, ...newFiles]
+      //   console.log('form');
 
-        return updateModelValue(attachments.value)
-      } else if (isPublic.value && isForm.value) {
-        attachments.value = [...attachments.value, ...imageUrls]
+      //   return updateModelValue(attachments.value)
+      // } else if (isPublic.value && isForm.value) {
+      //   attachments.value = [...attachments.value, ...imageUrls]
 
-        return updateModelValue(attachments.value)
-      }
+      //   return updateModelValue(attachments.value)
+
+      // }
 
       if (selectedFiles.length) {
         try {
