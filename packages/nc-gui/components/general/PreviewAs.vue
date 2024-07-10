@@ -26,7 +26,7 @@ const roleIcon = {
   editor: PhPencilCircleThin,
   viewer: iconMap.eye,
   commenter: PhChtTeardropTextThin,
-  limited: PhChtTeardropTextThin,
+  limited: iconMap.eye,
 }
 
 const position = ref({
