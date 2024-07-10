@@ -42,6 +42,21 @@ export class AttachmentsController {
     return attachments;
   }
 
+  @UseGuards(MetaApiLimiterGuard, GlobalGuard)
+  @Post(['/api/v1/db/storage/upload', '/api/v2/storage/upload'])
+  @HttpCode(200)
+  @UseInterceptors(UploadAllowedInterceptor, AnyFilesInterceptor())
+  async uploadForm(@UploadedFiles() files: Array<FileType>, @Req() req: NcRequest) {
+
+    const attachments = await this.attachmentsService.upload({
+      files: files,
+      path: req.query?.path?.toString(),
+      req,
+    });
+
+    return attachments;
+  }
+
   @Post(['/api/v1/db/storage/upload-by-url', '/api/v2/storage/upload-by-url'])
   @HttpCode(200)
   @UseInterceptors(UploadAllowedInterceptor)

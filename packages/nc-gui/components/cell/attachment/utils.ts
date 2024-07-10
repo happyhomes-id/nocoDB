@@ -122,13 +122,15 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
           }
 
           try {
-            file = await imageCompression(jpegFile, options)
-            // console.log(file);
+            const compressedBlob = await imageCompression(jpegFile, options)
+            file = new File([compressedBlob], jpegFile.name.replace(/\.[^/.]+$/, '') + '.jpg', {
+              type: 'image/jpeg',
+              lastModified: jpegFile.lastModified,
+            });
 
           } catch (error) {
             console.error('Error during image compression:', error)
           }
-
         } else if ((filesss as File).type.startsWith('image/')) {
           const options = {
             maxSizeMB: 0.5,          // Maximum size in MB
@@ -138,9 +140,11 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
           }
 
           try {
-            file = await imageCompression(filesss, options)
-            // console.log(file);
-
+            const compressedBlob = await imageCompression(filesss, options)
+            file = new File([compressedBlob], filesss.name.replace(/\.[^/.]+$/, '') + '.jpg', {
+              type: 'image/jpeg',
+              lastModified: filesss.lastModified,
+            });
           } catch (error) {
             console.error('Error during image compression:', error)
           }
