@@ -73,10 +73,10 @@ export class PublicDatasService {
     const listArgs: any = { ...query, ...dependencyFields };
     try {
       listArgs.filterArr = JSON.parse(listArgs.filterArrJson);
-    } catch (e) {}
+    } catch (e) { }
     try {
       listArgs.sortArr = JSON.parse(listArgs.sortArrJson);
-    } catch (e) {}
+    } catch (e) { }
     let data = [];
     let count = 0;
 
@@ -132,11 +132,11 @@ export class PublicDatasService {
 
     try {
       listArgs.filterArr = JSON.parse(listArgs.filterArrJson);
-    } catch (e) {}
+    } catch (e) { }
 
     try {
       listArgs.aggregation = JSON.parse(listArgs.aggregation);
-    } catch (e) {}
+    } catch (e) { }
 
     return await baseModel.aggregate(listArgs, view);
   }
@@ -202,13 +202,13 @@ export class PublicDatasService {
     const listArgs: any = { ...query };
     try {
       listArgs.filterArr = JSON.parse(listArgs.filterArrJson);
-    } catch (e) {}
+    } catch (e) { }
     try {
       listArgs.sortArr = JSON.parse(listArgs.sortArrJson);
-    } catch (e) {}
+    } catch (e) { }
     try {
       listArgs.options = JSON.parse(listArgs.optionsArrJson);
-    } catch (e) {}
+    } catch (e) { }
 
     let data = [];
 
@@ -296,10 +296,10 @@ export class PublicDatasService {
 
       try {
         listArgs.filterArr = JSON.parse(listArgs.filterArrJson);
-      } catch (e) {}
+      } catch (e) { }
       try {
         listArgs.sortArr = JSON.parse(listArgs.sortArrJson);
-      } catch (e) {}
+      } catch (e) { }
 
       const data = await baseModel.groupBy(listArgs);
       const count = await baseModel.groupByCount(listArgs);
@@ -555,8 +555,8 @@ export class PublicDatasService {
       )(
         (column.meta?.enableConditions
           ? await Filter.rootFilterListByLink(context, {
-              columnId: param.columnId,
-            })
+            columnId: param.columnId,
+          })
           : []) || [],
       );
 

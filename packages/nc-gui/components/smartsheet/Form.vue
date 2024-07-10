@@ -862,71 +862,7 @@ useEventListener(
                       <!-- form header -->
                       <div class="flex flex-col px-4 lg:px-6">
                         <!-- Form logo  -->
-                        <div class="mb-4">
-                          <div
-                            class="nc-form-logo-wrapper mx-6 group relative inline-block h-56px overflow-hidden flex items-center"
-                            :class="
-                              formViewData.logo_url
-                                ? 'max-w-189px hover:(w-full bg-gray-100 rounded-xl) '
-                                : 'bg-gray-100 max-w-147px rounded-xl'
-                            "
-                            style="transition: all 0.3s ease-in"
-                          >
-                            <LazyCellAttachmentImage
-                              v-if="formViewData.logo_url"
-                              :key="formViewData.logo_url?.path"
-                              :srcs="getFormLogoSrc"
-                              class="flex-none nc-form-logo !object-contain object-left max-h-full max-w-full !m-0"
-                            />
-                            <div
-                              class="items-center space-x-1 flex-nowrap m-3"
-                              :class="formViewData.logo_url ? 'hidden absolute top-0 left-0 group-hover:flex' : 'flex'"
-                            >
-                              <NcTooltip :disabled="isEeUI">
-                                <template #title>
-                                  <div class="text-center">
-                                    {{ $t('msg.info.thisFeatureIsOnlyAvailableInEnterpriseEdition') }}
-                                  </div>
-                                </template>
-                                <NcButton
-                                  v-if="isEditable"
-                                  type="secondary"
-                                  size="small"
-                                  class="nc-form-upload-logo-btn"
-                                  data-testid="nc-form-upload-log-btn"
-                                  :disabled="!isEeUI"
-                                  @click="openUploadImage(false)"
-                                >
-                                  <div class="flex gap-2 items-center">
-                                    <component :is="iconMap.upload" class="w-4 h-4" />
-                                    <span> {{ formViewData.logo_url ? $t('general.replace') : $t('general.upload') }} Logo</span>
-                                  </div>
-                                </NcButton>
-                              </NcTooltip>
-                              <NcTooltip v-if="isEeUI && formViewData.logo_url">
-                                <template #title> {{ $t('general.delete') }} {{ $t('general.logo') }} </template>
-                                <NcButton
-                                  type="secondary"
-                                  size="small"
-                                  class="nc-form-delete-logo-btn"
-                                  data-testid="nc-form-delete-logo-btn"
-                                  @click="
-                              () => {
-                                if (isEditable) {
-                                  formViewData!.logo_url = null
-                                  updateView()
-                                }
-                              }
-                            "
-                                >
-                                  <div class="flex gap-2 items-center">
-                                    <component :is="iconMap.delete" class="w-4 h-4" />
-                                  </div>
-                                </NcButton>
-                              </NcTooltip>
-                            </div>
-                          </div>
-                        </div>
+                        
 
                         <!-- form title -->
                         <div
@@ -1150,7 +1086,7 @@ useEventListener(
                         </template>
                       </Draggable>
 
-                      <!-- <div class="flex justify-between items-center mt-6 !px-8 !lg:px-12">
+                      <div class="flex justify-between items-center mt-6 !px-8 !lg:px-12">
                         <NcButton
                           type="secondary"
                           size="small"
@@ -1175,7 +1111,7 @@ useEventListener(
                         >
                           {{ $t('general.submit') }}
                         </NcButton>
-                      </div> -->
+                      </div>
                     </a-form>
 
                     <div v-if="!parseProp(formViewData?.meta).hide_branding" class="px-8 lg:px-12">

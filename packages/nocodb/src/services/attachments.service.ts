@@ -13,12 +13,17 @@ import mimetypes, { mimeIcons } from '~/utils/mimeTypes';
 import { PresignedUrl } from '~/models';
 import { utf8ify } from '~/helpers/stringHelpers';
 import { NcError } from '~/helpers/catchError';
+import { buffer } from 'stream/consumers';
+const sharp = require('sharp');
+const { promisify } = require('util');
+const fs = require('fs');
+const convert = require('heic-convert');
 
 @Injectable()
 export class AttachmentsService {
   protected logger = new Logger(AttachmentsService.name);
 
-  constructor(private readonly appHooksService: AppHooksService) {}
+  constructor(private readonly appHooksService: AppHooksService) { }
 
   async upload(param: { path?: string; files: FileType[]; req: NcRequest }) {
     // TODO: add getAjvValidatorMw
@@ -43,14 +48,60 @@ export class AttachmentsService {
       param.files?.map((file) => async () => {
         try {
           const originalName = utf8ify(file.originalname);
-          const fileName = `${path.parse(originalName).name}_${nanoid(
-            5,
-          )}${path.extname(originalName)}`;
+          const date = new Date
+          let fileName = `${path.parse(originalName).name}_${nanoid(5,)}${path.extname(originalName)}`;
+          let compressedFilePath = path.join(destPath, `compress_${fileName}`);
+          const fileExtension = file.path.split('.').pop();
 
-          const url = await storageAdapter.fileCreate(
+          let url = await storageAdapter.fileCreate(
             slash(path.join(destPath, fileName)),
-            file,
+            file
           );
+
+          // let url
+          // if (file.mimetype.startsWith('image/')) {
+          //   const data = await sharp(file.path)
+          //     // .resize({ width: 1000 })
+          //     .webp({ lossless: false, quality: 20 })
+          //     .toFile(compressedFilePath);
+
+          //   console.log('compress success', data);
+          //   url = await storageAdapter.fileCreate(
+          //     slash(path.join(destPath, fileName)),
+          //     {
+          //       mimetype: file.mimetype,
+          //       originalname: file.originalname,
+          //       path: file.mimetype.startsWith('image/') ? compressedFilePath : destPath,
+          //       size: file.size
+          //     },
+          //   );
+          // } else if (file.originalname.endsWith('heic') || file.originalname.endsWith('HEIC')) {
+
+          //   const inputBuffer = await promisify(fs.readFile)(file.path);
+          //   const outputBuffer = await convert({
+          //     buffer: inputBuffer, // the HEIC file buffer
+          //     format: 'JPEG',      // output format
+          //     quality: 0.1        // the jpeg compression quality, between 0 and 1
+          //   });
+
+          //   await promisify(fs.writeFile)(path.join(destPath, `${file.filename}.jpg`), outputBuffer);
+
+          //   url = await storageAdapter.fileCreate(
+          //     slash(path.join(destPath, fileName)),
+          //     {
+          //       mimetype: file.mimetype,
+          //       originalname: file.originalname,
+          //       path: path.join(destPath, `${file.filename}.jpg`),
+          //       size: outputBuffer.length
+          //     },
+          //   );
+
+          // } else {
+          //   url = await storageAdapter.fileCreate(
+          //     slash(path.join(destPath, fileName)),
+          //     file
+          //   );
+          // }
 
           const attachment: {
             url?: string;
@@ -74,15 +125,45 @@ export class AttachmentsService {
             // then store the attachment path only
             // url will be constructed in `useAttachmentCell`
             attachment.path = path.join(
-              'download',
+              // 'download',
+              '',
               filePath.join('/'),
               fileName,
             );
 
+
+            if (file.originalname.endsWith('heic') || file.originalname.endsWith('HEIC')) {
+
+              const inputBuffer = await promisify(fs.readFile)(file.path);
+              const outputBuffer = await convert({
+                buffer: inputBuffer, // the HEIC file buffer
+                format: 'JPEG',      // output format
+                quality: 0.1        // the jpeg compression quality, between 0 and 1
+              });
+
+              await promisify(fs.writeFile)(path.join(destPath, `${file.filename}.jpg`), outputBuffer);
+
+              url = await storageAdapter.fileCreate(
+                slash(path.join(destPath, fileName)),
+                {
+                  mimetype: file.mimetype,
+                  originalname: file.originalname,
+                  path: path.join(destPath, `${file.filename}.jpg`),
+                  size: outputBuffer.length
+                },
+              );
+
+            }
+
             attachment.signedPath = await PresignedUrl.getSignedUrl({
-              path: attachment.path.replace(/^download\//, ''),
+              // path: attachment.path.replace(/^download\//, ''),
+              path: attachment.path.replace(/^\//, ''),
             });
+
+
           } else {
+            console.log('form');
+
             if (attachment.url.includes('.amazonaws.com/')) {
               const relativePath = decodeURI(
                 attachment.url.split('.amazonaws.com/')[1],
@@ -146,11 +227,11 @@ export class AttachmentsService {
       param.urls?.map?.((urlMeta) => async () => {
         try {
           const { url, fileName: _fileName } = urlMeta;
+
+
           const fileNameWithExt = _fileName || url.split('/').pop();
 
-          const fileName = `${path.parse(fileNameWithExt).name}_${nanoid(
-            5,
-          )}${path.extname(fileNameWithExt)}`;
+          const fileName = `${path.parse(fileNameWithExt).name}_${nanoid(5,)}${path.extname(fileNameWithExt)}`;
 
           const attachmentUrl: string | null =
             await storageAdapter.fileCreateByUrl(
@@ -164,7 +245,7 @@ export class AttachmentsService {
           if (!attachmentUrl) {
             // then store the attachment path only
             // url will be constructed in `useAttachmentCell`
-            attachmentPath = `download/${filePath.join('/')}/${fileName}`;
+            attachmentPath = `uploads/${filePath.join('/')}/${fileName}`;
           }
 
           attachments.push({
@@ -175,6 +256,8 @@ export class AttachmentsService {
             size: urlMeta.size,
             icon: mimeIcons[path.extname(fileName).slice(1)] || undefined,
           });
+
+
         } catch (e) {
           errors.push(e);
         }

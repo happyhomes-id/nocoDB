@@ -25,13 +25,29 @@ import { NcRequest } from '~/interface/config';
 
 @Controller()
 export class AttachmentsController {
-  constructor(private readonly attachmentsService: AttachmentsService) {}
+  constructor(private readonly attachmentsService: AttachmentsService) { }
 
   @UseGuards(MetaApiLimiterGuard, GlobalGuard)
   @Post(['/api/v1/db/storage/upload', '/api/v2/storage/upload'])
   @HttpCode(200)
   @UseInterceptors(UploadAllowedInterceptor, AnyFilesInterceptor())
   async upload(@UploadedFiles() files: Array<FileType>, @Req() req: NcRequest) {
+
+    const attachments = await this.attachmentsService.upload({
+      files: files,
+      path: req.query?.path?.toString(),
+      req,
+    });
+
+    return attachments;
+  }
+
+  @UseGuards(MetaApiLimiterGuard, GlobalGuard)
+  @Post(['/api/v1/db/storage/upload', '/api/v2/storage/upload'])
+  @HttpCode(200)
+  @UseInterceptors(UploadAllowedInterceptor, AnyFilesInterceptor())
+  async uploadForm(@UploadedFiles() files: Array<FileType>, @Req() req: NcRequest) {
+
     const attachments = await this.attachmentsService.upload({
       files: files,
       path: req.query?.path?.toString(),

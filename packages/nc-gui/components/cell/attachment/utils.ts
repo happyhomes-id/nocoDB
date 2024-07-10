@@ -8,6 +8,8 @@ import MdiFileWordOutline from '~icons/mdi/file-word-outline'
 import MdiFilePowerpointBox from '~icons/mdi/file-powerpoint-box'
 import MdiFileExcelOutline from '~icons/mdi/file-excel-outline'
 import IcOutlineInsertDriveFile from '~icons/ic/outline-insert-drive-file'
+import imageCompression from 'browser-image-compression'
+import heic2any from 'heic2any';
 
 export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
   (updateModelValue: (data: string | Record<string, any>[]) => void) => {
@@ -81,6 +83,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
 
     /** save a file on select / drop, either locally (in-memory) or in the db */
     async function onFileSelect(selectedFiles: FileList | File[], selectedFileUrls?: AttachmentReqType[]) {
+
       if (!selectedFiles.length && !selectedFileUrls?.length) return
 
       const attachmentMeta = {
@@ -94,7 +97,59 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
 
       const imageUrls: AttachmentReqType[] = []
 
-      for (const file of selectedFiles.length ? selectedFiles : selectedFileUrls || []) {
+      for (let file of selectedFiles.length ? selectedFiles : selectedFileUrls || []) {
+        const filesss: any = file
+
+        if (filesss.name.endsWith("heic") || filesss.name.endsWith("HEIC") || filesss.name.endsWith("Heic")) {
+          const conversionResult = await heic2any({
+            blob: filesss,
+            toType: 'image/webp',
+            quality: 1,
+          });
+
+          const jpegBlob = conversionResult instanceof Blob ? conversionResult : conversionResult[0];
+
+          const jpegFile = new File([jpegBlob], filesss.name.replace(/\.[^/.]+$/, '') + '.webp', {
+            type: 'image/webp',
+            lastModified: filesss.lastModified,
+          });
+
+          const options = {
+            maxSizeMB: 0.5,          // Maximum size in MB
+            // maxWidthOrHeight: 1024, // Maximum width or height
+            useWebWorker: true,    // Use web worker for processing
+            fileType: 'image/webp', // Output format
+          }
+
+          try {
+            const compressedBlob = await imageCompression(jpegFile, options)
+            file = new File([compressedBlob], jpegFile.name.replace(/\.[^/.]+$/, '') + '.webp', {
+              type: 'image/webp',
+              lastModified: jpegFile.lastModified,
+            });
+
+          } catch (error) {
+            console.error('Error during image compression:', error)
+          }
+        } else if ((filesss as File).type.startsWith('image/')) {
+          const options = {
+            maxSizeMB: 0.5,          // Maximum size in MB
+            // maxWidthOrHeight: 1024, // Maximum width or height
+            useWebWorker: true,    // Use web worker for processing
+            fileType: 'image/webp', // Output format
+          }
+
+          try {
+            const compressedBlob = await imageCompression(filesss, options)
+            file = new File([compressedBlob], filesss.name.replace(/\.[^/.]+$/, '') + '.webp', {
+              type: 'image/webp',
+              lastModified: filesss.lastModified,
+            });
+          } catch (error) {
+            console.error('Error during image compression:', error)
+          }
+        }
+
         if (appInfo.value.ee) {
           // verify number of files
           if (
@@ -102,8 +157,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
             attachmentMeta.maxNumberOfAttachments
           ) {
             message.error(
-              `You can only upload at most ${attachmentMeta.maxNumberOfAttachments} file${
-                attachmentMeta.maxNumberOfAttachments > 1 ? 's' : ''
+              `You can only upload at most ${attachmentMeta.maxNumberOfAttachments} file${attachmentMeta.maxNumberOfAttachments > 1 ? 's' : ''
               } to this cell.`,
             )
             return
@@ -112,8 +166,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
           // verify file size
           if (file?.size && file.size > attachmentMeta.maxAttachmentSize * 1024 * 1024) {
             message.error(
-              `The size of ${(file as File)?.name || (file as AttachmentReqType)?.fileName} exceeds the maximum file size ${
-                attachmentMeta.maxAttachmentSize
+              `The size of ${(file as File)?.name || (file as AttachmentReqType)?.fileName} exceeds the maximum file size ${attachmentMeta.maxAttachmentSize
               } MB.`,
             )
             continue
@@ -128,8 +181,7 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
             )
           ) {
             message.error(
-              `${(file as File)?.name || (file as AttachmentReqType)?.fileName} has the mime type ${
-                (file as File)?.type || (file as AttachmentReqType)?.mimetype
+              `${(file as File)?.name || (file as AttachmentReqType)?.fileName} has the mime type ${(file as File)?.type || (file as AttachmentReqType)?.mimetype
               } which is not allowed in this column.`,
             )
             continue
@@ -149,45 +201,48 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
         }
       }
 
-      if (files.length && isPublic.value && isForm.value) {
-        const newFiles = await Promise.all<AttachmentType>(
-          Array.from(files).map(
-            (file) =>
-              new Promise<AttachmentType>((resolve) => {
-                const res: { file: File; title: string; mimetype: string; data?: any } = {
-                  ...file,
-                  file,
-                  title: file.name,
-                  mimetype: file.type,
-                }
+      // NON ACTIVE ON SUBMIT
+      // if (files.length && isPublic.value && isForm.value) {
+      //   const newFiles = await Promise.all<AttachmentType>(
+      //     Array.from(files).map(
+      //       (file) =>
+      //         new Promise<AttachmentType>((resolve) => {
+      //           const res: { file: File; title: string; mimetype: string; data?: any } = {
+      //             ...file,
+      //             file,
+      //             title: file.name,
+      //             mimetype: file.type,
+      //           }
 
-                if (isImage(file.name, (<any>file).mimetype ?? file.type)) {
-                  const reader = new FileReader()
+      //           if (isImage(file.name, (<any>file).mimetype ?? file.type)) {
+      //             const reader = new FileReader()
 
-                  reader.onload = (e) => {
-                    res.data = e.target?.result
-                    resolve(res)
-                  }
+      //             reader.onload = (e) => {
+      //               res.data = e.target?.result
+      //               resolve(res)
+      //             }
 
-                  reader.onerror = () => {
-                    resolve(res)
-                  }
+      //             reader.onerror = () => {
+      //               resolve(res)
+      //             }
 
-                  reader.readAsDataURL(file)
-                } else {
-                  resolve(res)
-                }
-              }),
-          ),
-        )
-        attachments.value = [...attachments.value, ...newFiles]
+      //             reader.readAsDataURL(file)
+      //           } else {
+      //             resolve(res)
+      //           }
+      //         }),
+      //     ),
+      //   )
+      //   attachments.value = [...attachments.value, ...newFiles]
+      //   console.log('form');
 
-        return updateModelValue(attachments.value)
-      } else if (isPublic.value && isForm.value) {
-        attachments.value = [...attachments.value, ...imageUrls]
+      //   return updateModelValue(attachments.value)
+      // } else if (isPublic.value && isForm.value) {
+      //   attachments.value = [...attachments.value, ...imageUrls]
 
-        return updateModelValue(attachments.value)
-      }
+      //   return updateModelValue(attachments.value)
+
+      // }
 
       if (selectedFiles.length) {
         try {
