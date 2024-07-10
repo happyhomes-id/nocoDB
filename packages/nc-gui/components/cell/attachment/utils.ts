@@ -103,14 +103,14 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
         if (filesss.name.endsWith("heic") || filesss.name.endsWith("HEIC") || filesss.name.endsWith("Heic")) {
           const conversionResult = await heic2any({
             blob: filesss,
-            toType: 'image/jpeg',
+            toType: 'image/webp',
             quality: 1,
           });
 
           const jpegBlob = conversionResult instanceof Blob ? conversionResult : conversionResult[0];
 
-          const jpegFile = new File([jpegBlob], filesss.name.replace(/\.[^/.]+$/, '') + '.jpg', {
-            type: 'image/jpeg',
+          const jpegFile = new File([jpegBlob], filesss.name.replace(/\.[^/.]+$/, '') + '.webp', {
+            type: 'image/webp',
             lastModified: filesss.lastModified,
           });
 
@@ -118,13 +118,13 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
             maxSizeMB: 0.5,          // Maximum size in MB
             // maxWidthOrHeight: 1024, // Maximum width or height
             useWebWorker: true,    // Use web worker for processing
-            fileType: 'image/jpeg', // Output format
+            fileType: 'image/webp', // Output format
           }
 
           try {
             const compressedBlob = await imageCompression(jpegFile, options)
-            file = new File([compressedBlob], jpegFile.name.replace(/\.[^/.]+$/, '') + '.jpg', {
-              type: 'image/jpeg',
+            file = new File([compressedBlob], jpegFile.name.replace(/\.[^/.]+$/, '') + '.webp', {
+              type: 'image/webp',
               lastModified: jpegFile.lastModified,
             });
 
@@ -136,13 +136,13 @@ export const [useProvideAttachmentCell, useAttachmentCell] = useInjectionState(
             maxSizeMB: 0.5,          // Maximum size in MB
             // maxWidthOrHeight: 1024, // Maximum width or height
             useWebWorker: true,    // Use web worker for processing
-            fileType: 'image/jpeg', // Output format
+            fileType: 'image/webp', // Output format
           }
 
           try {
             const compressedBlob = await imageCompression(filesss, options)
-            file = new File([compressedBlob], filesss.name.replace(/\.[^/.]+$/, '') + '.jpg', {
-              type: 'image/jpeg',
+            file = new File([compressedBlob], filesss.name.replace(/\.[^/.]+$/, '') + '.webp', {
+              type: 'image/webp',
               lastModified: filesss.lastModified,
             });
           } catch (error) {
