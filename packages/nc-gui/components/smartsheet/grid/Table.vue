@@ -2500,7 +2500,7 @@ onKeyStroke('ArrowDown', onDown)
           </NcButton>
         </div>
 
-        <!-- <template #overlay>
+        <template #overlay>
           <NcMenu>
             <NcMenuItem v-e="['c:row:add:grid']" class="nc-new-record-with-grid group" @click="onNewRecordToGridClick">
               <div class="flex flex-row items-center justify-start gap-x-3">
@@ -2519,7 +2519,7 @@ onKeyStroke('ArrowDown', onDown)
               <GeneralIcon v-if="!isAddNewRecordGridMode" icon="check" class="w-4 h-4 text-primary" />
             </NcMenuItem>
           </NcMenu>
-        </template> -->
+        </template>
       </NcDropdown>
     </div>
   </div>
