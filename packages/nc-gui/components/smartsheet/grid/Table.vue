@@ -1630,6 +1630,9 @@ onKeyStroke('ArrowDown', onDown)
         class="border-r-1 border-l-1 border-gray-200 h-full"
       ></div>
     </div>
+    
+
+    
     <div ref="gridWrapper" class="nc-grid-wrapper min-h-0 flex-1 relative" :class="gridWrapperClass">
       <div
         v-show="isPaginationLoading && !headerOnly"
