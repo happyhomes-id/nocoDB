@@ -135,33 +135,7 @@ reloadViewDataHook?.on(async (params: void | { shouldShowLoading?: boolean }) =>
       <div class="flex flex-col w-full">
         <template v-if="calendarRange?.length && !isCalendarMetaLoading">
           <LazySmartsheetCalendarYearView v-if="activeCalendarView === 'year'" />
-          <template v-if="!isCalendarDataLoading">
-            <LazySmartsheetCalendarMonthView
-              v-if="activeCalendarView === 'month'"
-              @expand-record="expandRecord"
-              @new-record="newRecord"
-            />
-            <LazySmartsheetCalendarWeekViewDateField
-              v-else-if="activeCalendarView === 'week' && calDataType === UITypes.Date"
-              @expand-record="expandRecord"
-              @new-record="newRecord"
-            />
-            <LazySmartsheetCalendarWeekViewDateTimeField
-              v-else-if="activeCalendarView === 'week' && calDataType === UITypes.DateTime"
-              @expand-record="expandRecord"
-              @new-record="newRecord"
-            />
-            <LazySmartsheetCalendarDayViewDateField
-              v-else-if="activeCalendarView === 'day' && calDataType === UITypes.Date"
-              @expand-record="expandRecord"
-              @new-record="newRecord"
-            />
-            <LazySmartsheetCalendarDayViewDateTimeField
-              v-else-if="activeCalendarView === 'day' && calDataType === UITypes.DateTime"
-              @expand-record="expandRecord"
-              @new-record="newRecord"
-            />
-          </template>
+         
 
           <div
             v-if="isCalendarDataLoading && activeCalendarView !== 'year'"

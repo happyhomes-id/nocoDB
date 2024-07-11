@@ -155,7 +155,7 @@ onMounted(() => {
             </template> -->
 
             <template v-if="!isMobileMode">
-              <NcDivider />
+              <!-- <NcDivider /> -->
 
 
               <!-- forum -->
@@ -185,7 +185,7 @@ onMounted(() => {
                 </NcMenuItem>
               </a> -->
 
-              <NcDivider />
+              <!-- <NcDivider /> -->
 
               <DashboardSidebarEEMenuOption v-if="isEeUI" />
 
