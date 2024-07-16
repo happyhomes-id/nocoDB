@@ -186,30 +186,14 @@ provide(IsFormInj, ref(true))
 </script>
 
 <template>
-  <a-select
-    v-if="column && isBoolean(column, abstractType)"
-    v-model:value="filterInput"
-    :disabled="filter.readOnly"
-    :options="booleanOptions"
-  />
-  <div
-    v-else
+  <a-select v-if="column && isBoolean(column, abstractType)" v-model:value="filterInput" :disabled="filter.readOnly"
+    :options="booleanOptions" />
+  <div v-else
     class="bg-white border-1 flex flex-grow min-h-4 h-full px-1 items-center nc-filter-input-wrapper !rounded-lg"
-    :class="{ 'px-2': hasExtraPadding, 'border-brand-500': isInputBoxOnFocus }"
-    @mouseup.stop
-  >
-    <component
-      :is="filterType ? componentMap[filterType] : Text"
-      v-model="filterInput"
-      :disabled="filter.readOnly"
-      placeholder="Enter a value"
-      :column="column"
-      class="flex !rounded-lg"
-      v-bind="componentProps"
-      location="filter"
-      @focus="isInputBoxOnFocus = true"
-      @blur="isInputBoxOnFocus = false"
-    />
+    :class="{ 'px-2': hasExtraPadding, 'border-brand-500': isInputBoxOnFocus }" @mouseup.stop>
+    <component :is="filterType ? componentMap[filterType] : Text" v-model="filterInput" :disabled="filter.readOnly"
+      placeholder="Enter a value" :column="column" class="flex !rounded-lg" v-bind="componentProps" location="filter"
+      @focus="isInputBoxOnFocus = true" @blur="isInputBoxOnFocus = false" />
   </div>
 </template>
 

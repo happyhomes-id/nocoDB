@@ -225,13 +225,8 @@ const copyIframeCode = async () => {
 
 <template>
   <div>
-    <a-button
-      v-if="isUIAllowed('viewShare') && !isSharedBase"
-      v-e="['c:view:share']"
-      outlined
-      class="nc-btn-share-view nc-toolbar-btn"
-      @click="genShareLink"
-    >
+    <a-button v-if="isUIAllowed('viewShare') && !isSharedBase" v-e="['c:view:share']" outlined
+      class="nc-btn-share-view nc-toolbar-btn" @click="genShareLink">
       <div class="flex items-center gap-1">
         <component :is="iconMap.share" />
         <!-- Share View -->
@@ -240,40 +235,23 @@ const copyIframeCode = async () => {
     </a-button>
 
     <!-- This view is shared via a private link -->
-    <a-modal
-      v-model:visible="showShareModel"
-      :class="{ active: showShareModel }"
-      size="small"
-      :title="$t('msg.info.privateLink')"
-      :footer="null"
-      width="min(100vw,720px)"
-      wrap-class-name="nc-modal-share-view"
-    >
+    <a-modal v-model:visible="showShareModel" :class="{ active: showShareModel }" size="small"
+      :title="$t('msg.info.privateLink')" :footer="null" width="min(100vw,720px)" wrap-class-name="nc-modal-share-view">
       <div class="share-link-box !bg-primary !bg-opacity-5 ring-1 ring-accent ring-opacity-100">
-        <div data-testid="nc-modal-share-view__link" class="flex-1 h-min text-xs text-gray-500">{{ sharedViewUrl }}</div>
+        <div data-testid="nc-modal-share-view__link" class="flex-1 h-min text-xs text-gray-500">{{ sharedViewUrl }}
+        </div>
 
-        <a
-          v-e="['c:view:share:open-url']"
-          :href="sharedViewUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="flex items-center !no-underline"
-        >
+        <a v-e="['c:view:share:open-url']" :href="sharedViewUrl" target="_blank" rel="noopener noreferrer"
+          class="flex items-center !no-underline">
           <component :is="iconMap.share" class="text-sm text-gray-500" />
         </a>
 
-        <component
-          :is="iconMap.copy"
-          v-e="['c:view:share:copy-url']"
-          class="text-gray-500 text-sm cursor-pointer"
-          @click="copyLink"
-        />
+        <component :is="iconMap.copy" v-e="['c:view:share:copy-url']" class="text-gray-500 text-sm cursor-pointer"
+          @click="copyLink" />
       </div>
 
-      <div
-        class="flex gap-1 items-center pb-1 text-gray-500 cursor-pointer font-weight-medium mb-2 mt-4 pl-1"
-        @click="copyIframeCode"
-      >
+      <div class="flex gap-1 items-center pb-1 text-gray-500 cursor-pointer font-weight-medium mb-2 mt-4 pl-1"
+        @click="copyIframeCode">
         <component :is="iconMap.embed" class="text-gray-500" />
         {{ $t('labels.embedInSite') }}
       </div>
@@ -283,78 +261,54 @@ const copyIframeCode = async () => {
 
         <div class="px-1 flex flex-col gap-2">
           <div>
-            <a-checkbox
-              v-if="shared.type === ViewTypes.FORM"
-              v-model:checked="surveyMode"
-              data-testid="nc-modal-share-view__survey-mode"
-              class="!text-sm"
-            >
+            <a-checkbox v-if="shared.type === ViewTypes.FORM" v-model:checked="surveyMode"
+              data-testid="nc-modal-share-view__survey-mode" class="!text-sm">
               {{ $t('general.useSurveyMode') }}
             </a-checkbox>
 
-            <!--            <Transition name="layout" mode="out-in">
+            <Transition name="layout" mode="out-in">
               <div v-if="surveyMode" class="flex flex-col justify-center pl-6">
                 <a-form-item class="!my-1" :has-feedback="false" name="transitionDuration">
                   <template #label>
                     <div class="text-xs">Transition duration (in MS)</div>
                   </template>
-                  <a-input
-                    v-model:value="transitionDuration"
-                    data-testid="nc-form-signin__email"
-                    size="small"
-                    class="!w-32"
-                    type="number"
-                    @change="saveTransitionDuration"
-                  />
+                  <a-input v-model:value="transitionDuration" data-testid="nc-form-signin__email" size="small"
+                    class="!w-32" type="number" @change="saveTransitionDuration" />
                 </a-form-item>
               </div>
-            </Transition> -->
+            </Transition>
           </div>
 
           <div>
             <!-- Password Protection -->
-            <a-checkbox
-              v-model:checked="passwordProtected"
-              data-testid="nc-modal-share-view__with-password"
-              class="!text-sm !my-1"
-            >
+            <a-checkbox v-model:checked="passwordProtected" data-testid="nc-modal-share-view__with-password"
+              class="!text-sm !my-1">
               {{ $t('msg.info.beforeEnablePwd') }}
             </a-checkbox>
 
             <Transition name="layout" mode="out-in">
               <div v-if="passwordProtected" class="pl-6 flex gap-2 mt-2 mb-4">
-                <a-input
-                  v-model:value="shared.password"
-                  data-testid="nc-modal-share-view__password"
-                  size="small"
-                  class="!text-xs max-w-[250px]"
-                  type="password"
-                  :placeholder="$t('placeholder.password.enter')"
-                />
+                <a-input v-model:value="shared.password" data-testid="nc-modal-share-view__password" size="small"
+                  class="!text-xs max-w-[250px]" type="password" :placeholder="$t('placeholder.password.enter')" />
 
-                <a-button
-                  data-testid="nc-modal-share-view__save-password"
-                  size="small"
-                  class="!text-xs"
-                  @click="saveShareLinkPassword"
-                >
+                <a-button data-testid="nc-modal-share-view__save-password" size="small" class="!text-xs"
+                  @click="saveShareLinkPassword">
                   {{ $t('placeholder.password.save') }}
                 </a-button>
               </div>
             </Transition>
           </div>
 
-          <div
-            v-if="
-              shared &&
-              (shared.type === ViewTypes.GRID ||
-                shared.type === ViewTypes.KANBAN ||
-                shared.type === ViewTypes.GALLERY ||
-                shared.type === ViewTypes.MAP)
-            "
-          >
+          <div v-if="
+            shared &&
+            (shared.type === ViewTypes.GRID ||
+              shared.type === ViewTypes.KANBAN ||
+              shared.type === ViewTypes.GALLERY ||
+              shared.type === ViewTypes.MAP)
+          ">
             <!-- Allow Download -->
-            <a-checkbox v-model:checked="allowCSVDownload" data-testid="nc-modal-share-view__with-csv-download" class="!text-sm">
+            <a-checkbox v-model:checked="allowCSVDownload" data-testid="nc-modal-share-view__with-csv-download"
+              class="!text-sm">
               {{ $t('labels.downloadAllowed') }}
             </a-checkbox>
           </div>
@@ -366,15 +320,9 @@ const copyIframeCode = async () => {
 
             <Transition name="layout" mode="out-in">
               <div v-if="viewTheme" class="flex pl-6">
-                <LazyGeneralColorPicker
-                  data-testid="nc-modal-share-view__theme-picker"
-                  class="!p-0"
-                  :model-value="shared.meta.theme?.primaryColor"
-                  :colors="baseThemeColors"
-                  :row-size="9"
-                  :advanced="false"
-                  @input="onChangeTheme"
-                />
+                <LazyGeneralColorPicker data-testid="nc-modal-share-view__theme-picker" class="!p-0"
+                  :model-value="shared.meta.theme?.primaryColor" :colors="baseThemeColors" :row-size="9"
+                  :advanced="false" @input="onChangeTheme" />
               </div>
             </Transition>
           </div>

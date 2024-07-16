@@ -30,22 +30,13 @@ const focus: VNodeRef = (el) =>
 </script>
 
 <template>
-  <input
-    v-if="!readOnly && editEnabled"
-    :ref="focus"
-    v-model="vModel"
-    class="nc-cell-field h-full w-full outline-none py-1 bg-transparent"
-    @blur="editEnabled = false"
-    @keydown.down.stop
-    @keydown.left.stop
-    @keydown.right.stop
-    @keydown.up.stop
-    @keydown.delete.stop
-    @selectstart.capture.stop
-    @mousedown.stop
-  />
+  <input v-if="readOnly || editEnabled" :ref="focus" v-model="vModel"
+    class="nc-cell-field h-full w-full outline-none py-1 bg-transparent" @blur="editEnabled = false" @keydown.down.stop
+    @keydown.left.stop @keydown.right.stop @keydown.up.stop @keydown.delete.stop @selectstart.capture.stop
+    @mousedown.stop />
 
   <span v-else-if="vModel === null && showNull" class="nc-cell-field nc-null uppercase">{{ $t('general.null') }}</span>
 
-  <LazyCellClampedText v-else class="nc-cell-field" :value="vModel" :lines="rowHeight" :style="{ 'word-break': 'break-word' }" />
+  <LazyCellClampedText v-else class="nc-cell-field" :value="vModel" :lines="rowHeight"
+    :style="{ 'word-break': 'break-word' }" />
 </template>
