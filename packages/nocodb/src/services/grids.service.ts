@@ -11,7 +11,7 @@ import { CacheScope } from '~/utils/globals';
 
 @Injectable()
 export class GridsService {
-  constructor(private readonly appHooksService: AppHooksService) {}
+  constructor(private readonly appHooksService: AppHooksService) { }
 
   async gridViewCreate(
     context: NcContext,

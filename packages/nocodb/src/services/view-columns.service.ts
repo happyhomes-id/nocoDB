@@ -23,7 +23,7 @@ import Noco from '~/Noco';
 
 @Injectable()
 export class ViewColumnsService {
-  constructor(private appHooksService: AppHooksService) {}
+  constructor(private appHooksService: AppHooksService) { }
 
   async columnList(context: NcContext, param: { viewId: string }) {
     return await View.getColumns(context, param.viewId, undefined);
@@ -93,22 +93,22 @@ export class ViewColumnsService {
     param: {
       viewId: string;
       columns:
-        | GridColumnReqType
-        | GalleryColumnReqType
-        | KanbanColumnReqType
-        | FormColumnReqType
-        | CalendarColumnReqType[]
-        | Record<
-            APIContext.VIEW_COLUMNS,
-            Record<
-              string,
-              | GridColumnReqType
-              | GalleryColumnReqType
-              | KanbanColumnReqType
-              | FormColumnReqType
-              | CalendarColumnReqType
-            >
-          >;
+      | GridColumnReqType
+      | GalleryColumnReqType
+      | KanbanColumnReqType
+      | FormColumnReqType
+      | CalendarColumnReqType[]
+      | Record<
+        APIContext.VIEW_COLUMNS,
+        Record<
+          string,
+          | GridColumnReqType
+          | GalleryColumnReqType
+          | KanbanColumnReqType
+          | FormColumnReqType
+          | CalendarColumnReqType
+        >
+      >;
       req: any;
     },
   ) {

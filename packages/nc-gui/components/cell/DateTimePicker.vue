@@ -22,6 +22,7 @@ const { isMssql, isXcdbBase } = useBase()
 
 const { showNull, isMobileMode } = useGlobal()
 
+// const readOnly = inject(ReadonlyInj, ref(false))
 const readOnly = inject(ReadonlyInj, ref(false))
 
 const active = inject(ActiveCellInj, ref(false))
@@ -358,10 +359,10 @@ const handleUpdateValue = (e: Event, _isDatePicker: boolean) => {
 
     targetValue = parseProp(column.value.meta).is12hrFormat
       ? targetValue
-          .trim()
-          .toUpperCase()
-          .replace(/(AM|PM)$/, ' $1')
-          .replace(/\s+/g, ' ')
+        .trim()
+        .toUpperCase()
+        .replace(/(AM|PM)$/, ' $1')
+        .replace(/\s+/g, ' ')
       : targetValue.trim()
 
     const parsedDate = dayjs(
@@ -429,110 +430,65 @@ const cellValue = computed(
 
 <template>
   <div v-bind="$attrs" class="nc-cell-field relative">
-    <NcDropdown
-      :visible="isOpen"
-      :placement="isDatePicker ? 'bottomLeft' : 'bottomRight'"
-      :auto-close="false"
-      :trigger="['click']"
-      class="nc-cell-picker-datetime"
+    <NcDropdown :visible="isOpen" :placement="isDatePicker ? 'bottomLeft' : 'bottomRight'" :auto-close="false"
+      :trigger="['click']" class="nc-cell-picker-datetime"
       :class="[`nc-${randomClass}`, { 'nc-null': modelValue === null && showNull }]"
-      :overlay-class-name="`${randomClass} nc-picker-datetime ${open ? 'active' : ''} !min-w-[0] overflow-hidden`"
-    >
-      <div
-        :title="localState?.format(dateTimeFormat)"
-        class="nc-date-picker ant-picker-input flex relative !w-auto gap-2"
-        :class="{
+      :overlay-class-name="`${randomClass} nc-picker-datetime ${open ? 'active' : ''} !min-w-[0] overflow-hidden`">
+      <div :title="localState?.format(dateTimeFormat)"
+        class="nc-date-picker ant-picker-input flex relative !w-auto gap-2" :class="{
           'justify-between': !isColDisabled,
-        }"
-      >
-        <div
-          class="flex-none rounded-md box-border w-[60%] max-w-[110px]"
-          :class="{
-            'py-0': isForm,
-            'py-0.5': !isForm && !isColDisabled,
-            'bg-gray-100': isDatePicker && isOpen,
-            'hover:bg-gray-100 px-1': !isColDisabled,
-          }"
-        >
-          <input
-            ref="datePickerRef"
-            :value="localState?.format(dateFormat) ?? ''"
+        }">
+        <div class="flex-none rounded-md box-border w-[60%] max-w-[110px]" :class="{
+          'py-0': isForm,
+          'py-0.5': !isForm && !isColDisabled,
+          'bg-gray-100': isDatePicker && isOpen,
+          'hover:bg-gray-100 px-1': !isColDisabled,
+        }">
+          <input ref="datePickerRef" :value="localState?.format(dateFormat) ?? ''"
             :placeholder="typeof placeholder === 'string' ? placeholder : placeholder?.date"
             class="nc-date-input w-full !truncate border-transparent outline-none !text-current !bg-transparent !focus:(border-none outline-none ring-transparent)"
-            :readonly="!!isMobileMode || isColDisabled"
-            @focus="onFocus(true)"
-            @keydown="handleKeydown($event, isOpen, true)"
-            @mouseup.stop
-            @mousedown.stop
-            @click.stop="clickHandler($event, true)"
-            @input="handleUpdateValue($event, true)"
-          />
+            :readonly="!!isMobileMode || isColDisabled" @focus="onFocus(true)"
+            @keydown="handleKeydown($event, isOpen, true)" @mouseup.stop @mousedown.stop
+            @click.stop="clickHandler($event, true)" @input="handleUpdateValue($event, true)" />
         </div>
-        <div
-          class="flex-none rounded-md box-border flex-1"
-          :class="[
-            `${timeCellMaxWidth}`,
-            {
-              'py-0': isForm,
-              'py-0.5': !isForm && !isColDisabled,
-              'bg-gray-100': !isDatePicker && isOpen,
-              'hover:bg-gray-100 px-1': !isColDisabled,
-            },
-          ]"
-        >
-          <input
-            ref="timePickerRef"
-            :value="cellValue"
+        <div class="flex-none rounded-md box-border flex-1" :class="[
+          `${timeCellMaxWidth}`,
+          {
+            'py-0': isForm,
+            'py-0.5': !isForm && !isColDisabled,
+            'bg-gray-100': !isDatePicker && isOpen,
+            'hover:bg-gray-100 px-1': !isColDisabled,
+          },
+        ]">
+          <input ref="timePickerRef" :value="cellValue"
             :placeholder="typeof placeholder === 'string' ? placeholder : placeholder?.time"
             class="nc-time-input w-full !truncate border-transparent outline-none !text-current !bg-transparent !focus:(border-none outline-none ring-transparent)"
-            :readonly="!!isMobileMode || isColDisabled"
-            @focus="onFocus(false)"
-            @keydown="handleKeydown($event, open)"
-            @mouseup.stop
-            @mousedown.stop
-            @click.stop="clickHandler($event, false)"
-            @input="handleUpdateValue($event, false)"
-          />
+            :readonly="!!isMobileMode || isColDisabled" @focus="onFocus(false)" @keydown="handleKeydown($event, open)"
+            @mouseup.stop @mousedown.stop @click.stop="clickHandler($event, false)"
+            @input="handleUpdateValue($event, false)" />
         </div>
       </div>
 
       <template #overlay>
-        <div
-          class="min-w-[72px]"
-          :class="{
-            'w-[256px]': isDatePicker,
-          }"
-        >
-          <NcDatePicker
-            v-if="isDatePicker"
-            v-model:page-date="tempDate"
-            :selected-date="localState"
-            :is-open="isOpen"
-            type="date"
-            size="medium"
-            @update:selected-date="handleSelectDate"
-          />
+        <div class="min-w-[72px]" :class="{
+          'w-[256px]': isDatePicker,
+        }">
+          <NcDatePicker v-if="isDatePicker" v-model:page-date="tempDate" :selected-date="localState" :is-open="isOpen"
+            type="date" size="medium" @update:selected-date="handleSelectDate" />
 
           <template v-else>
-            <NcTimeSelector
-              :selected-date="localState"
-              :min-granularity="30"
-              is-min-granularity-picker
-              :is12hr-format="!!parseProp(column.meta).is12hrFormat"
-              :is-open="isOpen"
-              @update:selected-date="handleSelectTime"
-            />
+            <NcTimeSelector :selected-date="localState" :min-granularity="30" is-min-granularity-picker
+              :is12hr-format="!!parseProp(column.meta).is12hrFormat" :is-open="isOpen"
+              @update:selected-date="handleSelectTime" />
           </template>
         </div>
       </template>
     </NcDropdown>
 
-    <GeneralIcon
-      v-if="localState && (isExpandedForm || isForm || !isGrid || isEditColumn) && !readOnly"
+    <GeneralIcon v-if="localState && (isExpandedForm || isForm || !isGrid || isEditColumn) && !readOnly"
       icon="closeCircle"
       class="nc-clear-date-time-icon nc-action-icon h-4 w-4 absolute right-0 top-[50%] transform -translate-y-1/2 invisible cursor-pointer"
-      @click.stop="handleSelectDate()"
-    />
+      @click.stop="handleSelectDate()" />
   </div>
 
   <div v-if="!editable && isGrid" class="absolute inset-0 z-90 cursor-pointer"></div>
